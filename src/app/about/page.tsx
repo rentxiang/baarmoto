@@ -49,7 +49,9 @@ const Page = async () => {
     <div className="container mx-auto px-5">
       <Header />
       <div className="prose lg:prose-lg dark:prose-invert m-auto mt-20 mb-10 blog-content">
-        <Markdown>{content}</Markdown>
+        {/* <Markdown>{content}</Markdown> */}
+        <Markdown>We will be back in a minute...</Markdown>
+
       </div>
       <Footer />
     </div>

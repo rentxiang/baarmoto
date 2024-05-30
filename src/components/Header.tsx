@@ -9,6 +9,7 @@ import {
 import { config } from "@/config";
 import { cn } from "@/lib/utils";
 import { Menu } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FunctionComponent } from "react";
@@ -76,7 +77,8 @@ export const Header: FunctionComponent = () => {
   return (
     <section className="flex items-center justify-between mt-8 md:mt-16 mb-12">
       <Link href="/">
-        <h1 className="text-4xl md:text-6xl font-bold tracking-tighter leading-tight">
+        <h1 className="flex items-center text-4xl md:text-6xl font-bold tracking-tighter leading-tight">
+          <Image src="/images/motorbikeIcon.svg" width={120} height={120} alt="baar"/>
           {config.blog.name}
         </h1>
       </Link>
