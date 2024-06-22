@@ -1,6 +1,7 @@
 import { BlogPostsPreview } from "@/components/BlogPostPreview";
 import { BlogPostsPagination } from "@/components/BlogPostsPagination";
 import { Footer } from "@/components/Footer";
+import { HomepageHero } from "@/components/HomepageHero";
 import { wisp } from "@/lib/wisp";
 
 const Page = async ({
@@ -12,6 +13,7 @@ const Page = async ({
   const result = await wisp.getPosts({ limit: 6, page });
   return (
     <div className="container mx-auto px-5 mb-10">
+      <HomepageHero/>
       <BlogPostsPreview posts={result.posts} />
       <BlogPostsPagination pagination={result.pagination} />
     </div>

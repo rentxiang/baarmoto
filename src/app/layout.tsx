@@ -56,10 +56,8 @@ export default function RootLayout({
             disableTransitionOnChange
           >
             <Header />
-
             <main>{children}</main>
-          <Footer />
-
+            <Footer />
           </ThemeProvider>
         </body>
       </html>

@@ -18,6 +18,7 @@ export const BlogPostPreview: FunctionComponent<{
             className="object-cover"
             src={post.image || "/images/placeholder.webp"}
             fill
+            loading="lazy"
           />
         </div>
       </Link>
