@@ -2,11 +2,13 @@
 import { GetPostResult } from "@/lib/wisp";
 import Link from "next/link";
 import sanitize from "sanitize-html";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 
 export const PostContent = ({ content }: { content: string }) => {
   return (
     <div
-      className="blog-content mx-auto"
+      className="blog-content mx-auto my-4"
       dangerouslySetInnerHTML={{
         __html: sanitize(content, {
           allowedTags: [
@@ -53,10 +55,23 @@ export const BlogPostContent = ({ post }: { post: GetPostResult["post"] }) => {
             </Link>
           ))}
         </div>
-        <div className="text-sm opacity-40 mt-4">
-          {Intl.DateTimeFormat("en-US").format(
-            new Date(publishedAt || createdAt)
-          )}
+        <div className="flex items-center justify-between text-sm opacity-40 mt-4">
+          <div>
+            {Intl.DateTimeFormat("en-US").format(
+              new Date(publishedAt || createdAt)
+            )}
+          </div>
+          <div>
+            <Link
+              href="/"
+              className={cn(
+                buttonVariants({ variant: "default" }),
+                "right-4 top-4 md:right-8 md:top-8"
+              )}
+            >
+              Back
+            </Link>
+          </div>
         </div>
       </div>
     </div>

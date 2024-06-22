@@ -8,15 +8,9 @@ import Image from "next/image";
 export const NotFound = () => {
   return (
     <div className="flex h-screen flex-col items-center justify-center">
-      <Image
-        src="/images/motorbikeIcon.svg"
-        width={120}
-        height={120}
-        alt="baar"
-        className="pb-4"
-      />
+
       <h1 className="text-5xl font-bold">404</h1>
-      <p className="mt-2 text-2xl">Page not found</p>
+      <p className="my-2 text-2xl">Page not found or we are working on that :o</p>
 
       <Button asChild className="mt-4">
         <Link href="/">

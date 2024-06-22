@@ -61,9 +61,7 @@ const Page = async ({ params: { slug } }: { params: Params }) => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div className="container mx-auto px-5">
-        <Header />
         <BlogPostContent post={result.post} />
-        <Footer />
       </div>
     </>
   );

@@ -20,6 +20,7 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
+import { DarkModeToggle } from "./DarkModeToggle";
 
 interface MenuItem {
   name: string;
@@ -28,6 +29,7 @@ interface MenuItem {
 }
 const menuItems: MenuItem[] = [
   { name: "Blog", href: "/" },
+  { name : 'Marketplace', href:'/marketplace'},
   { name: "About", href: "/about" },
 ];
 export const Navigation: FunctionComponent = () => {
@@ -77,14 +79,17 @@ export const Navigation: FunctionComponent = () => {
           </SheetContent>
         </Sheet>
       </div>
-      <div className="ml-4 md:ml-8">
+      <div className="flex justify-between gap-3 ml-4 md:ml-8">
         {" "}
+
         <SignedOut>
           <SignInButton />
         </SignedOut>
         <SignedIn>
           <UserButton />
         </SignedIn>
+        <DarkModeToggle />
+
       </div>
     </nav>
   );

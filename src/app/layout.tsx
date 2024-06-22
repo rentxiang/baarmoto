@@ -12,6 +12,8 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 const fontSans = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -53,7 +55,11 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <Header />
+
             <main>{children}</main>
+          <Footer />
+
           </ThemeProvider>
         </body>
       </html>

@@ -1,4 +1,3 @@
-import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { config } from "@/config";
 import { signOgImageUrl } from "@/lib/og-image";
@@ -43,7 +42,6 @@ export default async function Page() {
           </Link>
         ))}
       </div>
-      <Footer />
     </div>
   );
 }
