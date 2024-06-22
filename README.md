@@ -8,13 +8,13 @@
 - Dark mode
 
 ## Technologies
-
+- [Authentication]: auth.js
 - [Next.js 14 (App Router)](https://nextjs.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Shadcn UI](https://ui.shadcn.com/)
 - [ES Lint](https://eslint.org/)
 - [Typescript](https://www.typescriptlang.org/)
-
+- [Blog]: Wisp
 ## Getting Started
 
 First, run the development server:

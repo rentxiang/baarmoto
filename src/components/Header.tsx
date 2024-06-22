@@ -13,6 +13,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FunctionComponent } from "react";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
+
 interface MenuItem {
   name: string;
   href: string;
@@ -26,7 +34,7 @@ export const Navigation: FunctionComponent = () => {
   const pathname = usePathname();
 
   return (
-    <nav>
+    <nav className="flex justfiy-between ">
       <div className="hidden md:flex items-center">
         {menuItems.map((item) => (
           <div key={item.href} className="ml-4 md:ml-8">
@@ -69,6 +77,15 @@ export const Navigation: FunctionComponent = () => {
           </SheetContent>
         </Sheet>
       </div>
+      <div className="ml-4 md:ml-8">
+        {" "}
+        <SignedOut>
+          <SignInButton />
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
+      </div>
     </nav>
   );
 };
@@ -78,7 +95,12 @@ export const Header: FunctionComponent = () => {
     <section className="flex items-center justify-between mt-8 md:mt-16 mb-12">
       <Link href="/">
         <h1 className="flex items-center text-4xl md:text-6xl font-bold tracking-tighter leading-tight">
-          <Image src="/images/motorbikeIcon.svg" width={120} height={120} alt="baar"/>
+          <Image
+            src="/images/motorbikeIcon.svg"
+            width={120}
+            height={120}
+            alt="baar"
+          />
           {config.blog.name}
         </h1>
       </Link>
