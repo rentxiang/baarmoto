@@ -5,7 +5,7 @@ import Markdown from "react-markdown";
 
 const content = `
 
-# About Us
+# 
 
 
 Hey there, we are asian riders based in the San Francisco Bay Area. We ride and share passion for motorcycles together.
@@ -42,6 +42,7 @@ const Page = async () => {
   return (
     <div className="container mx-auto px-5">
       <div className="prose lg:prose-lg dark:prose-invert m-auto mt-20 mb-10 blog-content">
+        <h1 className="py-7 font-sans font-semibold tracking-tighter text-primary text-2xl md:text-3xl">About Us</h1>
         <Markdown>{content}</Markdown>
       </div>
     </div>

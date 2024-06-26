@@ -8,7 +8,7 @@ import { buttonVariants } from "@/components/ui/button";
 export const PostContent = ({ content }: { content: string }) => {
   return (
     <div
-      className="blog-content mx-auto my-4"
+      className="blog-content mx-auto my-4 space-y-7 "
       dangerouslySetInnerHTML={{
         __html: sanitize(content, {
           allowedTags: [
@@ -41,7 +41,7 @@ export const BlogPostContent = ({ post }: { post: GetPostResult["post"] }) => {
   return (
     <div>
       <div className="prose lg:prose-xl dark:prose-invert mx-auto lg:prose-h1:text-4xl mb-10 lg:mt-20 break-words">
-        <h1>{title}</h1>
+        <h1 className="font-sans font-semibold tracking-tighter text-primary text-2xl md:text-3xl">{title}</h1>
         <PostContent content={content} />
 
         <div className="mt-10 opacity-40 text-sm">
