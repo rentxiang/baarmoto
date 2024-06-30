@@ -32,10 +32,10 @@ const Page = async ({
   const page = searchParams.page ? parseInt(searchParams.page as string) : 1;
   const result = await wisp.getPosts({ limit: 6, tags: [slug], page });
   return (
-    <div className="container mx-auto px-5 mb-10">
+    <div className="container mx-auto px-5 mb-10 ">
       <Link href="/">
-        <Badge className="px-2 py-1">
-          <CircleX className="inline-block w-4 h-4 mr-2" />
+        <Badge className="px-2 py-1 border-2 border-gray-800 rounded hover:bg-slate-100">
+          <CircleX className="inline-block w-4 h-4 mr-2 " />
           Posts tagged with <strong className="mx-2">#{slug}</strong>{" "}
         </Badge>
       </Link>

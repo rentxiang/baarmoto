@@ -32,10 +32,10 @@ export const BlogPostPreview: FunctionComponent<{
         <div className="prose lg:prose-lg leading-relaxed md:text-lg line-clamp-4 text-muted-foreground">
           {post.description}
         </div>
-        <div className="text-sm text-muted-foreground">
+        <div className="text-sm text-muted-foreground ">
           {post.tags.map((tag) => (
-            <div key={tag.id} className="mr-2 inline-block">
-              <Link href={`/tag/${tag.name}`}>#{tag.name}</Link>
+            <div key={tag.id} className="mr-2 inline-block border border-gray-800 rounded hover:bg-slate-100">
+              <Link className="p-2" href={`/tag/${tag.name}`}>#{tag.name}</Link>
             </div>
           ))}
         </div>
