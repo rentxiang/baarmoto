@@ -39,6 +39,8 @@ const Posts: React.FC = () => {
   };
 
   const handleRefresh = () => {
+    setIsloading(true);
+
     fetchPosts();
   };
   if (isloading)
