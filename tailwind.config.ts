@@ -1,12 +1,12 @@
-import type { Config } from "tailwindcss"
-const { fontFamily } = require("tailwindcss/defaultTheme")
+import type { Config } from "tailwindcss";
+const { fontFamily } = require("tailwindcss/defaultTheme");
 const config = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
@@ -19,26 +19,26 @@ const config = {
     },
     extend: {
       keyframes: {
-                typewriter: {
+        typewriter: {
           to: {
-            left: '100%',
+            left: "100%",
           },
         },
         blink: {
-          '0%': {
-            opacity: '0',
+          "0%": {
+            opacity: "0",
           },
-          '0.1%': {
-            opacity: '1',
+          "0.1%": {
+            opacity: "1",
           },
-          '50%': {
-            opacity: '1',
+          "50%": {
+            opacity: "1",
           },
-          '50.1%': {
-            opacity: '0',
+          "50.1%": {
+            opacity: "0",
           },
-          '100%': {
-            opacity: '0',
+          "100%": {
+            opacity: "0",
           },
         },
         "accordion-down": {
@@ -51,7 +51,7 @@ const config = {
         },
       },
       animation: {
-        typewriter: 'typewriter 2s steps(11) forwards',
+        typewriter: "typewriter 2s steps(11) forwards",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
@@ -61,6 +61,6 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;

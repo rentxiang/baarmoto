@@ -29,7 +29,7 @@ interface MenuItem {
 }
 const menuItems: MenuItem[] = [
   { name: "Blog", href: "/" },
-  { name : 'Marketplace', href:'/marketplace'},
+  { name: "Marketplace", href: "/marketplace" },
   { name: "About", href: "/about" },
 ];
 export const Navigation: FunctionComponent = () => {
@@ -53,8 +53,8 @@ export const Navigation: FunctionComponent = () => {
           </div>
         ))}
       </div>
-      <div className="flex items-center md:hidden">
-        <Sheet>
+      <div className="flex items-center md:hidden m-4">
+        <Sheet >
           <SheetTrigger>
             <Menu size="24" />
           </SheetTrigger>
@@ -75,13 +75,23 @@ export const Navigation: FunctionComponent = () => {
                   </a>
                 ))}
               </SheetDescription>
+              <hr />
+              <div className="flex pt-7 justify-center gap-3 ml-4 md:ml-8 mr-3 ">
+                {" "}
+                <SignedOut>
+                  <SignInButton />
+                </SignedOut>
+                <SignedIn>
+                  <UserButton />
+                </SignedIn>
+                <DarkModeToggle />
+              </div>
             </SheetHeader>
           </SheetContent>
         </Sheet>
       </div>
-      <div className="flex justify-between gap-3 ml-4 md:ml-8">
+      <div className="hidden md:flex justify-between gap-3 ml-4 md:ml-8 mr-3  ">
         {" "}
-
         <SignedOut>
           <SignInButton />
         </SignedOut>
@@ -89,7 +99,6 @@ export const Navigation: FunctionComponent = () => {
           <UserButton />
         </SignedIn>
         <DarkModeToggle />
-
       </div>
     </nav>
   );
