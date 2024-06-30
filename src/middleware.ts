@@ -7,6 +7,7 @@ import {
     '/dashboard(.*)',
     '/marketplace(.*)',
     '/forum(.*)',
+    '/api (.*)',
   ]);
   
   export default clerkMiddleware((auth, req) => {

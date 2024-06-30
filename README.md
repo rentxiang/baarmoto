@@ -1,20 +1,23 @@
-# A Next.js 14 Blog using Server Components - backed by Wisp CMS<!-- omit in toc -->
+# Bay Area Asian Riders - A Next.js 14 full-stack community website 
 
 ## Features
 
 - Next.js 14 Server Component
 - Filter blog posts by tags
-- About page
+- Route Handler for Api
 - Dark mode
+- Vercel/Postgres for storage
 
 ## Technologies
-- [Authentication]: auth.js
+- [Authentication]: clerk.js
 - [Next.js 14 (App Router)](https://nextjs.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Shadcn UI](https://ui.shadcn.com/)
 - [ES Lint](https://eslint.org/)
 - [Typescript](https://www.typescriptlang.org/)
 - [Blog]: Wisp
+- [Database]: @Vercel/Postgres
+
 ## Getting Started
 
 First, run the development server:
