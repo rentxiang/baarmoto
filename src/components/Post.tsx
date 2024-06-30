@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
 import {
   Card,
   CardContent,
@@ -9,9 +9,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import Image from 'next/image';
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import { Skeleton } from "./ui/skeleton";
 
 interface Post {
   id: number;
@@ -34,14 +35,13 @@ const PostPage: React.FC = () => {
         try {
           const response = await fetch(`/api/get-post/${id}`);
           if (!response.ok) {
-            throw new Error('Failed to fetch post');
+            throw new Error("Failed to fetch post");
           }
           const data = await response.json();
           setPost(data.result);
-          console.log(data.result)
-
+          console.log(data.result);
         } catch (error) {
-          console.log(error)
+          console.log(error);
         } finally {
           setLoading(false);
         }
@@ -50,7 +50,14 @@ const PostPage: React.FC = () => {
     }
   }, [id]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return;
+  <div className="flex flex-col space-y-3">
+    <Skeleton className="h-[125px] w-[250px] rounded-xl" />
+    <div className="space-y-2">
+      <Skeleton className="h-4 w-[250px]" />
+      <Skeleton className="h-4 w-[200px]" />
+    </div>
+  </div>;
   if (!post) return <p>No post found</p>;
 
   return (
@@ -60,17 +67,29 @@ const PostPage: React.FC = () => {
       </Button>
       <Card className="shadow-md rounded-lg overflow-hidden">
         {post.pic_url && (
-          <Image src={post.pic_url} alt={post.title} width={200} height={200} className="w-full h-64 object-cover" />
+          <Image
+            src={post.pic_url}
+            alt={post.title}
+            width={200}
+            height={200}
+            className="w-full h-64 object-cover"
+          />
         )}
         <CardHeader>
-          <CardTitle className="text-2xl font-bold mb-2">{post.title}</CardTitle>
-          <CardDescription className="text-gray-600 mb-4">By {post.username}</CardDescription>
+          <CardTitle className="text-2xl font-bold mb-2">
+            {post.title}
+          </CardTitle>
+          <CardDescription className="text-gray-600 mb-4">
+            By {post.username}
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <p className="text-gray-800">{post.content}</p>
         </CardContent>
         <CardFooter>
-        <p className="text-sm text-gray-500">Posted on: {new Date(post.created_at).toLocaleDateString()}</p>
+          <p className="text-sm text-gray-500">
+            Posted on: {new Date(post.created_at).toLocaleDateString()}
+          </p>
         </CardFooter>
       </Card>
     </div>

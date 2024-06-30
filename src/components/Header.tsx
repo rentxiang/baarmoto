@@ -36,7 +36,7 @@ export const Navigation: FunctionComponent = () => {
   const pathname = usePathname();
 
   return (
-    <nav className="flex justfiy-between ">
+    <nav className="flex justfiy-between item-center">
       <div className="hidden md:flex items-center">
         {menuItems.map((item) => (
           <div key={item.href} className="ml-4 md:ml-8">
@@ -53,7 +53,7 @@ export const Navigation: FunctionComponent = () => {
           </div>
         ))}
       </div>
-      <div className="md:hidden">
+      <div className="flex items-center md:hidden">
         <Sheet>
           <SheetTrigger>
             <Menu size="24" />
