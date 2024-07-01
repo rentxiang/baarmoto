@@ -14,11 +14,11 @@
 - [Next.js 14 (App Router)](https://nextjs.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Shadcn UI](https://ui.shadcn.com/)
-- [clerk.js]clerk.js(https://clerk.com/)
+- [clerk.js](https://clerk.com/)
 - [Typescript](https://www.typescriptlang.org/)
 - [ES Lint](https://eslint.org/)
-- [Wisp] (https://wisp.blog/)
-- [@Vercel/Postgres] (https://vercel.com/docs/storage/vercel-postgres/quickstart)
+- [Wisp](https://wisp.blog/)
+- [@Vercel/Postgres](https://vercel.com/docs/storage/vercel-postgres/quickstart)
 
 ## Todos:
 - Filters Func
