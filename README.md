@@ -10,14 +10,14 @@
 
 
 ## Technologies
-- [Authentication]clerk.js
 - [Next.js 14 (App Router)](https://nextjs.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Shadcn UI](https://ui.shadcn.com/)
-- [ES Lint](https://eslint.org/)
+- [Authentication]clerk.js(https://clerk.com/)
 - [Typescript](https://www.typescriptlang.org/)
-- [Blog] Wisp
-- [Database] @Vercel/Postgres
+- [ES Lint](https://eslint.org/)
+- [Blog] Wisp(https://wisp.blog/)
+- [Database] @Vercel/Postgres(https://vercel.com/docs/storage/vercel-postgres/quickstart)
 
 ## Todos:
 - Filters Func
