@@ -4,20 +4,20 @@
 ## Features
 
 - Next.js 14 Server Component
-- Filter blog posts by tags
+- Wisp Blog with Tags
 - Route Handler
-- Dark mode
+- Dark Mode
 
 
 ## Technologies
-- [Authentication]: clerk.js
+- [Authentication]clerk.js
 - [Next.js 14 (App Router)](https://nextjs.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Shadcn UI](https://ui.shadcn.com/)
 - [ES Lint](https://eslint.org/)
 - [Typescript](https://www.typescriptlang.org/)
-- [Blog]: Wisp
-- [Database]: @Vercel/Postgres
+- [Blog] Wisp
+- [Database] @Vercel/Postgres
 
 ## Todos:
 - Filters Func
