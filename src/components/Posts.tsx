@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
 
 interface Post {
-  id: number;
+  post_id: number;
   title: string;
   username: string;
   content: string;
@@ -46,19 +46,19 @@ const Posts: React.FC = () => {
   if (isloading)
     return (
       <div className="flex flex-col space-y-3">
-        <Skeleton className="h-[300px] w-[500px] rounded-xl bg-gradient-to-r from-purple-400 via-pink-500 to-red-500  animate-puls" />
+        {/* <Skeleton className="h-[300px] w-[500px] rounded-xl bg-gradient-to-r from-purple-400 via-pink-500 to-red-500  animate-puls" /> */}
         <div className="space-y-2">
-          <Skeleton className="h-4 w-[250px] bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 rounded" />
-          <Skeleton className="h-4 w-[200px] bg-gradient-to-r from-yellow-400 via-green-500 to-blue-500 rounded" />
+          <Skeleton className="h-4 w-[700px] bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 rounded" />
+          <Skeleton className="h-4 w-[350px] bg-gradient-to-r from-yellow-400 via-green-500 to-blue-500 rounded" />
         </div>
       </div>
     );
   return (
     <div className="flex flex-col gap-4">
-      {posts.map((post, key) => (
+      {posts.map((post) => (
         <PostCard
-          key={post.id}
-          id={post.id}
+          key={post.post_id}
+          post_id={post.post_id}
           title={post.title}
           username={post.username}
           content={post.content}

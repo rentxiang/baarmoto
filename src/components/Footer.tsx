@@ -7,7 +7,7 @@ import Image from "next/image";
 
 export const Footer: FunctionComponent = () => {
   return (
-    <div>
+    <div className="pt-7">
 
     <div className="hidden md:flex flex-row items-end justify-between mt-12 md:mt-16 mb-12">
       <div className="text-sm text-muted-foreground gap-4">

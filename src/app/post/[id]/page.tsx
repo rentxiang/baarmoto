@@ -1,11 +1,12 @@
-import Postpage from "@/components/Post";
-const Post = () => {
+import Post from "@/components/Post";
+
+const Postpage = () => {
     return (
         <div className="flex flex-col p-4">
-            <Postpage/>
+            <Post/>
         </div>
     );
 }
 
-export default Post;
+export default Postpage;
 

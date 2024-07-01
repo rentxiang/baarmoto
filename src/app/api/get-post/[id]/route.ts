@@ -10,7 +10,7 @@ export async function GET(request: Request, {params}:{params:{id:number}}) {
       return NextResponse.json({ error: 'Missing id parameter' }, { status: 400 });
     }
 
-    const result = await sql`SELECT * FROM posts WHERE id = ${id};`;
+    const result = await sql`SELECT * FROM posts WHERE post_id = ${id};`;
 
     if (result.rows.length === 0) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 });

@@ -15,7 +15,7 @@ import Image from "next/image";
 import { Skeleton } from "./ui/skeleton";
 
 interface Post {
-  id: number;
+  post_id: number;
   title: string;
   username: string;
   content: string;
@@ -23,8 +23,9 @@ interface Post {
   created_at: string;
 }
 
-const PostPage: React.FC = () => {
-  const { id } = useParams();
+const Post: React.FC = () => {
+  const {id} = useParams()
+  console.log('id here',id)
   const router = useRouter();
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
@@ -72,7 +73,7 @@ const PostPage: React.FC = () => {
             alt={post.title}
             width={200}
             height={200}
-            className="w-full h-64 object-cover"
+            className="w-full h-full object-cover"
           />
         )}
         <CardHeader>
@@ -96,4 +97,4 @@ const PostPage: React.FC = () => {
   );
 };
 
-export default PostPage;
+export default Post;

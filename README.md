@@ -1,12 +1,13 @@
 # Bay Area Asian Riders - A Next.js 14 full-stack community website 
 
+![Logo](/public/images/motorbikeIcon.svg)
 ## Features
 
 - Next.js 14 Server Component
 - Filter blog posts by tags
-- Route Handler for Api
+- Route Handler
 - Dark mode
-- Vercel/Postgres for storage
+
 
 ## Technologies
 - [Authentication]: clerk.js
@@ -17,6 +18,12 @@
 - [Typescript](https://www.typescriptlang.org/)
 - [Blog]: Wisp
 - [Database]: @Vercel/Postgres
+
+## Todos:
+- Filters Func
+- Search Func
+- CRUD Func
+
 
 ## Getting Started
 

@@ -23,7 +23,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-import { toast } from "@/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import exp from "constants";
 import { log } from "console";
 
@@ -61,6 +61,7 @@ const FormSchema = z.object({
 });
 
 export function SideFilter() {
+  const { toast } = useToast();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -69,12 +70,36 @@ export function SideFilter() {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data);
+    console.log("submitted:", data.items);
+    // query database with data.items
+
+    let query = data.items.join("&");
+
+    // // test
+
+    // const whereClauses = data.items
+    //   .map((tag) => `tags @> '["${tag}"]'::jsonb`)
+    //   .join(" OR ");
+    // const sql = `SELECT * FROM posts WHERE ${whereClauses}`;
+    // console.log("sql data:", sql);
+
+    // fetch(`/api/get-filtered-posts?tags=${query}`)
+    fetch(`/api/get-filtered-posts/${query}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("filtered data:", data.res);
+      })
+      .catch((error) => {
+        console.error("Error fetching posts:", error);
+      });
+
     toast({
       title: "You submitted the following values:",
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+          <code className="text-white">
+            {JSON.stringify(data.items, null, 2)}
+          </code>
         </pre>
       ),
     });
@@ -89,8 +114,9 @@ export function SideFilter() {
           render={() => (
             <FormItem>
               <div className="mb-4">
-                <FormLabel className="text-base">Categories</FormLabel>
-                <FormDescription>What do you need today?</FormDescription>
+                <FormLabel className="text-xl font-bold mb-4">Categories</FormLabel>
+                <FormDescription className="py-1">Buy and sell used gears</FormDescription>
+                <p className="text-sm pt-1">⚠️ Future feature</p>
               </div>
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="filter">
@@ -110,25 +136,21 @@ export function SideFilter() {
                               className="flex flex-row items-start space-x-3 space-y-0"
                             >
                               <FormControl>
-                                  <Checkbox
-                                    id={item.id}
-                                    checked={field.value?.includes(item.id)}
-                                    onCheckedChange={(checked) => {
-                                      if (checked) {
-                                        field.onChange([
-                                          ...field.value,
-                                          item.id,
-                                        ]);
-                                      } else {
-                                        field.onChange(
-                                          field.value?.filter(
-                                            (value) => value !== item.id
-                                          )
-                                        );
-                                      }
-                                    }}
-                                  />
-  
+                                <Checkbox
+                                  id={item.id}
+                                  checked={field.value?.includes(item.id)}
+                                  onCheckedChange={(checked) => {
+                                    if (checked) {
+                                      field.onChange([...field.value, item.id]);
+                                    } else {
+                                      field.onChange(
+                                        field.value?.filter(
+                                          (value) => value !== item.id
+                                        )
+                                      );
+                                    }
+                                  }}
+                                />
                               </FormControl>
                               <FormLabel className="font-normal">
                                 {item.label}

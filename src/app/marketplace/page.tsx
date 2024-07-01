@@ -11,7 +11,6 @@ const Marketplace = () => {
             </div>
             <div className="flex flex-row ">
                 <div className="w-1/4 p-4">
-                    <h1 className="text-xl font-bold mb-4">Filter</h1>
                     <SideFilter />
                 </div>
                 <div className="w-3/4 p-4">
