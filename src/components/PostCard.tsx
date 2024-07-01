@@ -25,14 +25,14 @@ interface PostCardProps {
 const PostCard: React.FC<PostCardProps> = ({ post_id, title, username, content, pic_url, created_at }) => {
     const router = useRouter()
     return (
-        <Card className="p-4 shadow-md rounded-lg focus:outline-none ">
-            <CardHeader className='cursor-pointer' onClick={()=> router.push(`/post/${post_id}`)}>
-                <h2 className="text-xl font-bold">{title}</h2>
+        <Card className="flex flex-col h-full w-max-40 shadow-md rounded-lg focus:outline-none ">
+            <CardHeader className='w-50 cursor-pointer' onClick={()=> router.push(`/post/${post_id}`)}>
+            <Image src={pic_url} alt='picture' className='cursor-pointer w-full h-full' width={150} height={150} />
+            <h2 className="text-xl font-bold p-6">{title}</h2>
+            </CardHeader>
+            <CardContent className='pb-2 mt-auto'>
             <p className="text-sm text-gray-500">By {username}</p>
 
-            </CardHeader>
-            <CardContent onClick={()=> router.push(`/post/${post_id}`)}>
-                <Image src={pic_url} alt='picture' className='cursor-pointer' width={100} height={100} />
             </CardContent>
             <CardFooter className=''>
 

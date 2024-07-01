@@ -4,8 +4,11 @@ import { config } from "@/config";
 import Link from "next/link";
 import { Icons } from "./ui/icons";
 import Image from "next/image";
+import { useRouter } from 'next/navigation';
+
 
 export const Footer: FunctionComponent = () => {
+  const router = useRouter()
   return (
     <div className="pt-7">
 
@@ -19,7 +22,7 @@ export const Footer: FunctionComponent = () => {
           />
         <p className="pt-7">© {config.blog.copyright} {new Date().getFullYear()}</p>
       </div>
-      <div className="flex justify-between gap-3 text-sm text-muted-foreground ">
+      <div className="flex justify-between gap-2 text-sm text-muted-foreground cursor-pointer" onClick={()=> router.push(`https://github.com/rentxiang/baarmoto`)}>
 
       <Link href="https://github.com/rentxiang/baarmoto"> Github</Link> <Icons.gitHub className="mr-2 h-4 w-4"  />
 
@@ -35,7 +38,7 @@ export const Footer: FunctionComponent = () => {
           />
         <p className="pt-7">© {config.blog.copyright} {new Date().getFullYear()}</p>
       </div>
-      <div className="flex items-center justify-items-center gap-3 py-4 text-sm text-muted-foreground ">
+      <div className="flex items-center justify-items-center gap-3 py-4 text-sm text-muted-foreground " onClick={()=> router.push(`https://github.com/rentxiang/baarmoto`)}>
 
       <Link href="https://github.com/rentxiang/baarmoto"> Github</Link> <Icons.gitHub className="mr-2 h-4 w-4"  />
 

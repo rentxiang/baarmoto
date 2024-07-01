@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Skeleton } from "./ui/skeleton";
+import { IoLogoWechat } from "react-icons/io5";
 
 interface Post {
   post_id: number;
@@ -62,7 +63,7 @@ const Post: React.FC = () => {
   if (!post) return <p>No post found</p>;
 
   return (
-    <div className="max-w-3xl mx-auto p-4">
+    <div className="w-96 mx-auto p-4">
       <Button className="mb-4" onClick={() => router.back()}>
         Back
       </Button>
@@ -87,11 +88,15 @@ const Post: React.FC = () => {
         <CardContent>
           <p className="text-gray-800">{post.content}</p>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="justify-between items-center">
+        <Button className="gap-2" onClick={() => console.log("Messaging...")}>
+        <IoLogoWechat />Message
+      </Button>
           <p className="text-sm text-gray-500">
             Posted on: {new Date(post.created_at).toLocaleDateString()}
           </p>
         </CardFooter>
+        
       </Card>
     </div>
   );

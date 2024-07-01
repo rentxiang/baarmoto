@@ -14,7 +14,7 @@ const Marketplace = () => {
                     <SideFilter />
                 </div>
                 <div className="w-3/4 p-4">
-                    <h1 className="text-xl font-bold mb-4">Posts</h1>
+                    <h1 className="text-xl font-bold mb-4">Today&apos; picks</h1>
                     <Posts/>
                 </div>
             </div>
@@ -25,11 +25,10 @@ const Marketplace = () => {
             </div>
             <div className="flex flex-col ">
                 <div className="">
-                    <h1 className="text-xl font-bold mb-4">Filter</h1>
                     <SideFilter />
                 </div>
                 <div className="py-4">
-                    <h1 className="text-xl font-bold mb-4">Posts</h1>
+                    <h1 className="text-xl font-bold mb-4">Today&apos; picks</h1>
                     <Posts/>
                 </div>
             </div>

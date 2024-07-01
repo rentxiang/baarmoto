@@ -54,19 +54,35 @@ const Posts: React.FC = () => {
       </div>
     );
   return (
-    <div className="flex flex-col gap-4">
-      {posts.map((post) => (
-        <PostCard
-          key={post.post_id}
-          post_id={post.post_id}
-          title={post.title}
-          username={post.username}
-          content={post.content}
-          pic_url={post.pic_url}
-          created_at={post.created_at}
-        />
-      ))}
-      <Button onClick={handleRefresh}>Refresh (test)</Button>
+    <div>
+      <div className="md:hidden flex flex-col gap-4 m-4">
+        {posts.map((post) => (
+          <PostCard
+            key={post.post_id}
+            post_id={post.post_id}
+            title={post.title}
+            username={post.username}
+            content={post.content}
+            pic_url={post.pic_url}
+            created_at={post.created_at}
+          />
+        ))}
+        <Button onClick={handleRefresh}>Refresh (test)</Button>
+      </div>
+      <div className="hidden md:grid grid-cols-3 gap-4">
+        {posts.map((post) => (
+          <PostCard
+            key={post.post_id}
+            post_id={post.post_id}
+            title={post.title}
+            username={post.username}
+            content={post.content}
+            pic_url={post.pic_url}
+            created_at={post.created_at}
+          />
+        ))}
+        <Button onClick={handleRefresh}>Refresh (test)</Button>
+      </div>
     </div>
   );
 };
