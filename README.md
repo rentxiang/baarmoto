@@ -3,21 +3,22 @@
 ![Logo](/public/images/motorbikeIcon.svg)
 ## Features
 
-- Next.js 14 Server Component
+- Fullstack Next.js 14 webapp with @Vercel/Postgres
+- Server Component
 - Wisp Blog with Tags
 - Route Handler
 - Dark Mode
-
+- Clerk Authentication
 
 ## Technologies
 - [Next.js 14 (App Router)](https://nextjs.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Shadcn UI](https://ui.shadcn.com/)
-- [Authentication]clerk.js(https://clerk.com/)
+- [clerk.js]clerk.js(https://clerk.com/)
 - [Typescript](https://www.typescriptlang.org/)
 - [ES Lint](https://eslint.org/)
-- [Blog] Wisp(https://wisp.blog/)
-- [Database] @Vercel/Postgres(https://vercel.com/docs/storage/vercel-postgres/quickstart)
+- [Wisp] (https://wisp.blog/)
+- [@Vercel/Postgres] (https://vercel.com/docs/storage/vercel-postgres/quickstart)
 
 ## Todos:
 - Filters Func
