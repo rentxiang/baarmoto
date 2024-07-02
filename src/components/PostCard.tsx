@@ -23,23 +23,24 @@ interface PostCardProps {
 }
 
 const PostCard: React.FC<PostCardProps> = ({ post_id, title, username, content, pic_url, created_at }) => {
-    const router = useRouter()
+    const router = useRouter();
     return (
-        <Card className="flex flex-col h-full w-max-40 shadow-md rounded-lg focus:outline-none ">
-            <CardHeader className='w-50 cursor-pointer' onClick={()=> router.push(`/post/${post_id}`)}>
-            <Image src={pic_url} alt='picture' className='cursor-pointer w-full h-full' width={150} height={150} />
-            <h2 className="text-xl font-bold p-6">{title}</h2>
+        <Card className="shadow-md rounded-lg focus:outline-none flex flex-col justify-between h-full">
+            <CardHeader className='cursor-pointer' onClick={() => router.push(`/post/${post_id}`)}>
+            <div className='min-h-30 max-h-48 overflow-hidden'>
+                    <Image src={pic_url} alt='picture' className='cursor-pointer w-full object-cover' width={150} height={150} />
+                </div>
+                <h2 className="text-xl font-bold p-6 max-h-36 overflow-hidden overflow-ellipsis">{title}</h2>
             </CardHeader>
             <CardContent className='pb-2 mt-auto'>
-            <p className="text-sm text-gray-500">By {username}</p>
-
+                <p className="text-sm text-gray-500">By {username}</p>
             </CardContent>
             <CardFooter className=''>
-
-            <p className="text-sm text-gray-500">Posted on: {new Date(created_at).toLocaleDateString()}</p>
+                <p className="text-sm text-gray-500">Posted on: {new Date(created_at).toLocaleDateString()}</p>
             </CardFooter>
         </Card>
     );
 }
+
 
 export default PostCard;

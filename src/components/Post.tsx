@@ -52,14 +52,16 @@ const Post: React.FC = () => {
     }
   }, [id]);
 
-  if (loading) return;
-  <div className="flex flex-col space-y-3">
-    <Skeleton className="h-[125px] w-[250px] rounded-xl" />
+  if (loading) return(
+    <div className="flex flex-col space-y-3 items-center justify-center">
+    <Skeleton className="h-[255px] w-[250px] rounded-xl" />
     <div className="space-y-2">
-      <Skeleton className="h-4 w-[250px]" />
-      <Skeleton className="h-4 w-[200px]" />
+      <Skeleton className="h-6 w-[250px]" />
+      <Skeleton className="h-6 w-[200px]" />
     </div>
-  </div>;
+  </div>
+  )
+
   if (!post) return <p>No post found</p>;
 
   return (
@@ -77,7 +79,7 @@ const Post: React.FC = () => {
             className="w-full h-full object-cover"
           />
         )}
-        <CardHeader>
+        <CardHeader className="p-6">
           <CardTitle className="text-2xl font-bold mb-2">
             {post.title}
           </CardTitle>
