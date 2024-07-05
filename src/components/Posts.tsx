@@ -3,11 +3,15 @@ import React, { useEffect, useState } from "react";
 import PostCard from "./PostCard";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
-
 interface Post {
   id: number;
   title: string;
-  author: string;
+  author: {
+    id: string;
+    name?: string;
+    email: string;
+    image_url?: string; 
+  };
   content: string;
   pic_url: string;
   createdAt: string;
@@ -17,7 +21,6 @@ interface Post {
 const Posts: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [isloading, setIsloading] = useState(true);
-
   useEffect(() => {
     fetchPosts();
   }, []);
@@ -25,21 +28,21 @@ const Posts: React.FC = () => {
   const fetchPosts = async () => {
     try {
       let response = await fetch("/api/get-posts", {
-        next: { revalidate: 1000 },
+        next: { revalidate: 60 },
       });
       if (!response.ok) {
         throw new Error("Failed to fetch posts");
       }
       const data = await response.json();
-      console.log("data", data.res);
-      setPosts(data.res.reverse());
+      console.log("data", data);
+      setPosts(data.reverse());
       setIsloading(false);
     } catch (error) {
       console.error("Error fetching posts:", error);
     }
   };
 
-  const handleRefresh = () => {
+  const refresh = () => {
     setIsloading(true);
     fetchPosts();
   };
@@ -63,11 +66,12 @@ const Posts: React.FC = () => {
             key={post.id}
             id={post.id}
             title={post.title}
-            author={post.author}
+            author={post.author.name || "Anonymous"}
             content={post.content}
             pic_url={post.pic_url}
             created_at={post.createdAt}
             price={post.price}
+            author_image_url={post.author.image_url || "https://github.com/shadcn.png"}
           />
         ))}
       </div>
@@ -77,11 +81,13 @@ const Posts: React.FC = () => {
             key={post.id}
             id={post.id}
             title={post.title}
-            author={post.author}
+            author={post.author.name || "Anonymous"}
             content={post.content}
             pic_url={post.pic_url}
             created_at={post.createdAt}
             price={post.price}
+            author_image_url={post.author.image_url || "https://github.com/shadcn.png"}
+
           />
         ))}
       </div>

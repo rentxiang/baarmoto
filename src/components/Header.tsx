@@ -13,13 +13,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FunctionComponent } from "react";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { DarkModeToggle } from "./DarkModeToggle";
 
 interface MenuItem {
@@ -53,8 +47,29 @@ export const Navigation: FunctionComponent = () => {
           </div>
         ))}
       </div>
+      <div className="hidden md:flex justify-between gap-3 ml-4 md:ml-8 mr-3  ">
+        {" "}
+        <SignedOut>
+          <SignInButton />
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
+        <DarkModeToggle />
+      </div>
+
+      {/* small device */}
       <div className="flex items-center md:hidden m-4">
-        <Sheet >
+      <div className="flex  justify-center mr-4 text-sm ">
+          {" "}
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+        </div>
+        <Sheet>
           <SheetTrigger>
             <Menu size="24" />
           </SheetTrigger>
@@ -78,27 +93,12 @@ export const Navigation: FunctionComponent = () => {
               <hr />
               <div className="flex pt-7 justify-center gap-3 ml-4 md:ml-8 mr-3 ">
                 {" "}
-                <SignedOut>
-                  <SignInButton />
-                </SignedOut>
-                <SignedIn>
-                  <UserButton />
-                </SignedIn>
                 <DarkModeToggle />
               </div>
             </SheetHeader>
           </SheetContent>
         </Sheet>
-      </div>
-      <div className="hidden md:flex justify-between gap-3 ml-4 md:ml-8 mr-3  ">
-        {" "}
-        <SignedOut>
-          <SignInButton />
-        </SignedOut>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
-        <DarkModeToggle />
+ 
       </div>
     </nav>
   );

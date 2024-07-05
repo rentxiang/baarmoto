@@ -14,11 +14,17 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Skeleton } from "./ui/skeleton";
 import { IoLogoWechat } from "react-icons/io5";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 interface Post {
   id: string;
   title: string;
-  username: string;
+  author: {
+    id: string;
+    name?: string;
+    email: string;
+    image_url?: string; 
+  };
   content: string;
   pic_url: string;
   createdAt: string;
@@ -86,8 +92,12 @@ const Post: React.FC = () => {
           <CardTitle className="mb-2">
             ${post.price}
           </CardTitle>
-          <CardDescription className="text-gray-600 mb-4 pt-2">
-            By {post.username}
+          <CardDescription className="text-gray-600 mb-4 pt-2 flex items-center gap-3">
+            <p>By {post.author.name}</p>
+        <Avatar >
+          <AvatarImage src={post.author.image_url} />
+          <AvatarFallback ></AvatarFallback>
+        </Avatar>
           </CardDescription>
         </CardHeader>
         <CardContent>

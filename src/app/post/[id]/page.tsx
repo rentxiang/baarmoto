@@ -2,7 +2,7 @@ import Post from "@/components/Post";
 
 const Postpage = () => {
     return (
-        <div className="flex flex-col p-4">
+        <div className="">
             <Post/>
         </div>
     );

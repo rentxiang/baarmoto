@@ -25,8 +25,8 @@ model Post {
     published Boolean   @default(false)
     createdAt DateTime  @default(now()) @map(name: "created_at")
     updatedAt DateTime  @updatedAt @map(name: "updated_at")
-    author    User?     @relation(fields: [authorId], references: [id])
-    authorId  String?
+    author    User      @relation(fields: [authorId], references: [id])
+    authorId  String
     tags      PostTag[]
     price     Int?
 
@@ -41,6 +41,7 @@ model User {
     updatedAt DateTime @updatedAt @map(name: "updated_at")
     posts     Post[]
     wechat    String?
+    image_url String?
 
     @@map(name: "users")
 }

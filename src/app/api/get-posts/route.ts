@@ -1,16 +1,21 @@
-import { sql } from '@vercel/postgres';
-import { cookies } from 'next/headers';
-import { NextResponse } from 'next/server';
-// export const revalidate = 500
+import prisma from "@/lib/prisma";
+import { cookies } from "next/headers";
+import { NextResponse } from "next/server";
+
 
 export async function GET(request: Request) {
-    cookies(); // dynamic rendering
+cookies();
+
   try {
-    const result =
-      await sql`Select * From posts;`;
-    const res = result.rows.length > 0 ? result.rows : null;
-    return NextResponse.json({ res }, { status: 200 });
+    const posts = await prisma.post.findMany({
+      include: {
+        author: true,
+      },
+    });
+
+    return NextResponse.json(posts);
   } catch (error) {
-    return NextResponse.json({ error }, { status: 500 });
+    console.error("Error fetching posts:", error);
+    return NextResponse.json({ error: "Failed to fetch posts" }, { status: 500 });
   }
 }

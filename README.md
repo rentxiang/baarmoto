@@ -42,3 +42,8 @@ pnpm dev
 bun dev
 ```
 
+## Challenges faced
+
+1. dynamic rendering 
+2. cache strategy: revalidate and cookie()
+3. postgres tags filter fetch -> Prisma ORM introduced 

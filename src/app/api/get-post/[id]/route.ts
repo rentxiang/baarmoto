@@ -13,7 +13,11 @@ export async function GET(request: Request, {params}:{params:{id:string}}) {
     const result = await prisma.post.findUnique({
       where: {
         id: id,
+
       },
+      include:{
+        author: true
+      }
     })
 
     if (!result) { 
