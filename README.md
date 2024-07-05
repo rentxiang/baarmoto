@@ -1,6 +1,7 @@
 # Bay Area Asian Riders - A Next.js 14 full-stack community website 
 
 ![Logo](/public/images/motorbikeIcon.svg)
+![ScreenShot1](/public/images/screenshot1.png)
 ## Features
 
 - Fullstack Next.js 14 webapp with @Vercel/Postgres
@@ -9,6 +10,7 @@
 - Route Handler
 - Dark Mode
 - Clerk Authentication
+- Prisma ORM
 
 ## Technologies
 - [Next.js 14 (App Router)](https://nextjs.org/)
@@ -19,7 +21,7 @@
 - [ES Lint](https://eslint.org/)
 - [Wisp](https://wisp.blog/)
 - [@Vercel/Postgres](https://vercel.com/docs/storage/vercel-postgres/quickstart)
-
+- [Prisma](https://www.prisma.io/)
 ## Todos:
 - Filters Func
 - Search Func
