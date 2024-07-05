@@ -47,6 +47,7 @@ const PostCard: React.FC<PostCardProps> = ({
             className="cursor-pointer w-full object-cover"
             width={150}
             height={150}
+            loading="lazy"
           />
         </div>
         <h2 className="text-xl font-bold px-6 pt-6 max-h-36 overflow-hidden overflow-ellipsis">
