@@ -32,7 +32,7 @@ const Posts: React.FC = () => {
       }
       const data = await response.json();
       console.log("data", data.res);
-      setPosts(data.res);
+      setPosts(data.res.reverse());
       setIsloading(false);
     } catch (error) {
       console.error("Error fetching posts:", error);
