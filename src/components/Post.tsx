@@ -16,17 +16,17 @@ import { Skeleton } from "./ui/skeleton";
 import { IoLogoWechat } from "react-icons/io5";
 
 interface Post {
-  post_id: number;
+  id: string;
   title: string;
   username: string;
   content: string;
   pic_url: string;
-  created_at: string;
+  createdAt: string;
+  price: number
 }
 
 const Post: React.FC = () => {
   const {id} = useParams()
-  console.log('id here',id)
   const router = useRouter();
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
@@ -83,7 +83,10 @@ const Post: React.FC = () => {
           <CardTitle className="text-2xl font-bold mb-2">
             {post.title}
           </CardTitle>
-          <CardDescription className="text-gray-600 mb-4">
+          <CardTitle className="mb-2">
+            ${post.price}
+          </CardTitle>
+          <CardDescription className="text-gray-600 mb-4 pt-2">
             By {post.username}
           </CardDescription>
         </CardHeader>
@@ -95,7 +98,7 @@ const Post: React.FC = () => {
         <IoLogoWechat />Message
       </Button>
           <p className="text-sm text-gray-500">
-            Posted on: {new Date(post.created_at).toLocaleDateString()}
+            Posted on: {new Date(post.createdAt).toLocaleDateString()}
           </p>
         </CardFooter>
         

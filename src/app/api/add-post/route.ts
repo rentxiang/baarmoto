@@ -14,7 +14,6 @@ export async function POST(request: Request){
             published:true
         }
     })
-    console.log({result})
 
     return NextResponse.json({result})
 }
