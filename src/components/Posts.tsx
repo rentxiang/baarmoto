@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
 
 interface Post {
-  post_id: number;
+  id: number;
   title: string;
   author: string;
   content: string;
@@ -61,8 +61,8 @@ const Posts: React.FC = () => {
       <div className="md:hidden flex flex-col gap-4 m-4">
         {posts.map((post) => (
           <PostCard
-            key={post.post_id}
-            post_id={post.post_id}
+            key={post.id}
+            id={post.id}
             title={post.title}
             author={post.author}
             content={post.content}
@@ -76,8 +76,8 @@ const Posts: React.FC = () => {
       <div className="hidden md:grid grid-cols-3 gap-4">
         {posts.map((post) => (
           <PostCard
-            key={post.post_id}
-            post_id={post.post_id}
+            key={post.id}
+            id={post.id}
             title={post.title}
             author={post.author}
             content={post.content}
@@ -86,7 +86,6 @@ const Posts: React.FC = () => {
             price={post.price}
           />
         ))}
-        <Button onClick={handleRefresh}>Refresh (test)</Button>
       </div>
     </div>
   );

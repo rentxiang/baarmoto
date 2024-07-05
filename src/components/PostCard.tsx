@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation';
 
 
 interface PostCardProps {
-    post_id: number;
+    id: number;
     title: string;
     author: string;
     content: string;
@@ -23,11 +23,11 @@ interface PostCardProps {
     price: number;
 }
 
-const PostCard: React.FC<PostCardProps> = ({ post_id, title, author, content, pic_url, created_at, price }) => {
+const PostCard: React.FC<PostCardProps> = ({ id, title, author, content, pic_url, created_at, price }) => {
     const router = useRouter();
     return (
         <Card className="shadow-md rounded-lg focus:outline-none flex flex-col justify-between h-full">
-            <CardHeader className='cursor-pointer' onClick={() => router.push(`/post/${post_id}`)}>
+            <CardHeader className='cursor-pointer' onClick={() => router.push(`/post/${id}`)}>
             <div className='min-h-30 max-h-48 overflow-hidden'>
                     <Image src={pic_url} alt='picture' className='cursor-pointer w-full object-cover' width={150} height={150} />
                 </div>
