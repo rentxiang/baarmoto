@@ -2,7 +2,7 @@ const buildConfig = () => {
   const blogId = process.env.NEXT_PUBLIC_BLOG_ID;
   if (!blogId) throw new Error("NEXT_PUBLIC_BLOG_ID is missing");
   const name = process.env.NEXT_PUBLIC_BLOG_DISPLAY_NAME || "BAAR.";
-  const copyright = process.env.NEXT_PUBLIC_BLOG_COPYRIGHT || "Tianxiang Ren";
+  const copyright = process.env.NEXT_PUBLIC_BLOG_COPYRIGHT || "Dylan Ren";
   const defaultTitle =
     process.env.NEXT_DEFAULT_METADATA_DEFAULT_TITLE || "BAAR";
   const defaultDescription = process.env.NEXT_PUBLIC_BLOG_DESCRIPTION || "Bay Area Asian Riders.";

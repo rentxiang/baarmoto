@@ -1,0 +1,57 @@
+// schema.prisma
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider  = "postgresql"
+    url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+    directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model Tag {
+    id       String @id @default(cuid())
+    tag_name String @unique
+
+    posts PostTag[]
+}
+
+model Post {
+    id        String    @id @default(cuid())
+    title     String
+    content   String?
+    pic_url   String
+    published Boolean   @default(false)
+    createdAt DateTime  @default(now()) @map(name: "created_at")
+    updatedAt DateTime  @updatedAt @map(name: "updated_at")
+    author    User?     @relation(fields: [authorId], references: [id])
+    authorId  String?
+    tags      PostTag[]
+    price     Int?
+
+    @@map(name: "posts")
+}
+
+model User {
+    id        String   @id @default(cuid())
+    name      String?
+    email     String   @unique
+    createdAt DateTime @default(now()) @map(name: "created_at")
+    updatedAt DateTime @updatedAt @map(name: "updated_at")
+    posts     Post[]
+    wechat    String?
+
+    @@map(name: "users")
+}
+
+model PostTag {
+    id     String @id @default(cuid())
+    postId String
+    tagId  String
+
+    post Post @relation(fields: [postId], references: [id])
+    tag  Tag  @relation(fields: [tagId], references: [id])
+
+    @@unique([postId, tagId])
+}

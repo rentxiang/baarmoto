@@ -42,10 +42,10 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang="en" >
         <body
           className={cn(
-            "min-h-screen bg-background font-sans antialiased max-w-6xl m-auto",
+            "min-h-screen bg-background font-sans antialiased ",
             fontSans.variable
           )}
         >
@@ -55,9 +55,11 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Header />
-            <main>{children}</main>
-            <Footer />
+            <div className="container max-w-8xl mx-auto">
+              <Header />
+              <main>{children}</main>
+              <Footer />
+            </div>
           </ThemeProvider>
         </body>
       </html>

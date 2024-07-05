@@ -1,42 +1,48 @@
+import AddPost from "@/components/AddPost";
 import PostSearch from "@/components/PostSearch";
 import Posts from "@/components/Posts";
 import SideFilter from "@/components/SideFilter";
 const Marketplace = () => {
-    return (
-        <div>
+  return (
+    <div>
+      <div className="hidden md:flex flex-col p-4">
+        <div className="mb-4">
+          <PostSearch />
+        </div>
+        <div className="flex flex-row ">
+          <div className="w-1/4 p-4">
+            <SideFilter />
+          </div>
+          <div className="w-3/4 p-4">
+            <div className="flex justify-between items-center">
+              <h1 className="text-xl font-bold mb-4">Today&apos; picks</h1>
+              <AddPost />
+            </div>
 
-        <div className="hidden md:flex flex-col p-4">
-            <div className="mb-4">
-                <PostSearch />
-            </div>
-            <div className="flex flex-row ">
-                <div className="w-1/4 p-4">
-                    <SideFilter />
-                </div>
-                <div className="w-3/4 p-4">
-                    <h1 className="text-xl font-bold mb-4">Today&apos; picks</h1>
-                    <Posts/>
-                </div>
-            </div>
+            <Posts />
+          </div>
         </div>
-        <div className="md:hidden flex flex-col p-4">
-            <div className="mb-4">
-                <PostSearch />
-            </div>
-            <div className="flex flex-col ">
-                <div className="">
-                    <SideFilter />
-                </div>
-                <div className="py-4">
-                    <h1 className="text-xl font-bold mb-4">Today&apos; picks</h1>
-                    <Posts/>
-                </div>
-            </div>
+      </div>
+      <div className="md:hidden flex flex-col p-4">
+        <div className="mb-4">
+          <PostSearch />
         </div>
-        </div>
+        <div className="flex flex-col ">
+          <div className="">
+            <SideFilter />
+          </div>
+          <div className="py-4">
+            <div className="flex justify-between items-center">
+              <h1 className="text-xl font-bold mb-4">Today&apos; picks</h1>
+              <AddPost />
+            </div>
 
-    );
-}
+            <Posts />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default Marketplace;
-

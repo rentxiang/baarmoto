@@ -1,10 +1,10 @@
 import { sql } from '@vercel/postgres';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
-export const revalidate = 500
+// export const revalidate = 500
 
 export async function GET(request: Request) {
-    // cookies(); // dynamic rendering
+    cookies(); // dynamic rendering
   try {
     const result =
       await sql`Select * From posts;`;

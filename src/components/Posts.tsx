@@ -7,10 +7,11 @@ import { Skeleton } from "./ui/skeleton";
 interface Post {
   post_id: number;
   title: string;
-  username: string;
+  author: string;
   content: string;
   pic_url: string;
   created_at: string;
+  price: number;
 }
 
 const Posts: React.FC = () => {
@@ -53,6 +54,8 @@ const Posts: React.FC = () => {
         </div>
       </div>
     );
+  if (!posts) return <p>No post found</p>;
+
   return (
     <div>
       <div className="md:hidden flex flex-col gap-4 m-4">
@@ -61,10 +64,11 @@ const Posts: React.FC = () => {
             key={post.post_id}
             post_id={post.post_id}
             title={post.title}
-            username={post.username}
+            author={post.author}
             content={post.content}
             pic_url={post.pic_url}
             created_at={post.created_at}
+            price={post.price}
           />
         ))}
         <Button onClick={handleRefresh}>Refresh (test)</Button>
@@ -75,10 +79,11 @@ const Posts: React.FC = () => {
             key={post.post_id}
             post_id={post.post_id}
             title={post.title}
-            username={post.username}
+            author={post.author}
             content={post.content}
             pic_url={post.pic_url}
             created_at={post.created_at}
+            price={post.price}
           />
         ))}
         <Button onClick={handleRefresh}>Refresh (test)</Button>
