@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['www.cycleworld.com'],
+    domains: [],
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "imagedelivery.net",
+        // hostname: "imagedelivery.net",
       },
     ],
   },

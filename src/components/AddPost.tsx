@@ -93,14 +93,12 @@ const AddPost: React.FC = () => {
           <Button type="button" onClick={handleNewPost}> + New</Button>
         </DrawerTrigger>
 
-        <DrawerContent className="flex justify-center items-center p-4 max-w-md">
+        <DrawerContent className="flex justify-center items-center p-4 max-w-md ">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <DrawerHeader >
                 <DrawerTitle className="pt-2">What to sell?</DrawerTitle>
-                <DrawerDescription>
-                  This action cannot be undone.
-                </DrawerDescription>
+ 
               </DrawerHeader>
 
               <FormField
@@ -115,7 +113,6 @@ const AddPost: React.FC = () => {
                     {form.formState.errors.title && (
                       <FormMessage>{form.formState.errors.title.message}</FormMessage>
                     )}
-                    <FormDescription>Title cannot be empty</FormDescription>
                   </FormItem>
                 )}
               />
@@ -149,7 +146,6 @@ const AddPost: React.FC = () => {
                     {form.formState.errors.content && (
                       <FormMessage>{form.formState.errors.content.message}</FormMessage>
                     )}
-                    <FormDescription>Content cannot be empty</FormDescription>
                   </FormItem>
                 )}
               />
@@ -166,7 +162,6 @@ const AddPost: React.FC = () => {
                     {form.formState.errors.price && (
                       <FormMessage>{form.formState.errors.price.message}</FormMessage>
                     )}
-                    <FormDescription>Price can&apos;t be bigger than 999999</FormDescription>
                   </FormItem>
                 )}
               />
@@ -183,7 +178,7 @@ const AddPost: React.FC = () => {
                     {form.formState.errors.pic_url && (
                       <FormMessage>{form.formState.errors.pic_url.message}</FormMessage>
                     )}
-                    <FormDescription>We only accept picture URLs</FormDescription>
+                    <FormDescription>Sorry, we only accept picture urls for now :o</FormDescription>
                   </FormItem>
                 )}
               />
