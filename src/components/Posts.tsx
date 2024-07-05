@@ -49,8 +49,8 @@ const Posts: React.FC = () => {
       <div className="flex flex-col space-y-3">
         {/* <Skeleton className="h-[300px] w-[500px] rounded-xl bg-gradient-to-r from-purple-400 via-pink-500 to-red-500  animate-puls" /> */}
         <div className="space-y-2">
-          <Skeleton className="h-4 w-[700px] bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 rounded" />
-          <Skeleton className="h-4 w-[350px] bg-gradient-to-r from-yellow-400 via-green-500 to-blue-500 rounded" />
+          <Skeleton className="h-4 w-full bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 rounded" />
+          <Skeleton className="h-4 w-1/2 bg-gradient-to-r from-yellow-400 via-green-500 to-blue-500 rounded" />
         </div>
       </div>
     );
