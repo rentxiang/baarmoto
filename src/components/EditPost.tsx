@@ -25,7 +25,9 @@ import {
 } from "@/components/ui/drawer";
 import { useState, useEffect } from "react";
 import { Input } from "./ui/input";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
+import { FaEdit } from "react-icons/fa";
+
 const formSchema = z.object({
   title: z
     .string()
@@ -46,9 +48,12 @@ const formSchema = z.object({
   ),
 });
 type FormValues = z.infer<typeof formSchema> & { name?: string };
-const AddPost: React.FC = () => {
-  const [isAdding, setIsAdding] = useState(false);
+
+const EditPost: React.FC = () => {
+  const { id } = useParams();
+  const [isEditing, setIsEditing] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -58,13 +63,34 @@ const AddPost: React.FC = () => {
     },
   });
 
+  useEffect(() => {
+    if (id) {
+      const fetchPost = async () => {
+        try {
+          const response = await fetch(`/api/get-post/${id}`);
+          if (!response.ok) {
+            throw new Error("Failed to fetch post");
+          }
+          const data = await response.json();
+          form.reset(data.result);
+          console.log(data.result);
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchPost();
+    }
+  }, [id, form]);
+
   const onSubmit = async (values: FormValues) => {
     setSubmitting(true);
     console.log("values:", values);
 
     try {
-      const res = await fetch("/api/add-post", {
-        method: "POST",
+      const res = await fetch(`/api/edit-post/${id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           "Cache-Control": "no-cache",
@@ -73,32 +99,36 @@ const AddPost: React.FC = () => {
       });
 
       if (!res.ok) {
-        throw new Error("Failed to submit post.");
+        throw new Error("Failed to update post.");
       }
       setSubmitting(false);
-      setIsAdding(false);
-      router.push("/maketplace");
+      setIsEditing(false);
+      router.push("/marketplace");
     } catch (error) {
-      console.error("Error submitting post:", error);
-      alert("Failed to submit post. Please try again.");
+      setSubmitting(false);
+      console.error("Error updating post:", error);
+      alert("Failed to update post. Please try again.");
     }
   };
+
   useEffect(() => {
     // Prefetch the marketplace page
     router.prefetch("/marketplace");
   }, [router]);
-  const handleNewPost = () => {
-    setIsAdding(true);
-    console.log("editing new post");
+
+  const handleEditPost = () => {
+    setIsEditing(true);
+    console.log("editing post");
   };
+
+  if (loading) return <p></p>;
 
   return (
     <div>
-      <Drawer open={isAdding} onOpenChange={setIsAdding}>
+      <Drawer open={isEditing} onOpenChange={setIsEditing}>
         <DrawerTrigger asChild>
-          <Button type="button" onClick={handleNewPost}>
-            {" "}
-            + New
+          <Button type="button" onClick={handleEditPost}>
+          <FaEdit/>
           </Button>
         </DrawerTrigger>
 
@@ -106,7 +136,7 @@ const AddPost: React.FC = () => {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <DrawerHeader>
-                <DrawerTitle className="pt-2">What to sell?</DrawerTitle>
+                <DrawerTitle className="pt-2">Edit Your Post</DrawerTitle>
               </DrawerHeader>
 
               <FormField
@@ -193,7 +223,7 @@ const AddPost: React.FC = () => {
                   {submitting ? "Submitting..." : "Submit"}
                 </Button>
                 <DrawerClose>
-                  <Button variant="outline" onClick={() => setIsAdding(false)}>
+                  <Button variant="outline" onClick={() => setIsEditing(false)}>
                     Cancel
                   </Button>
                 </DrawerClose>
@@ -206,4 +236,4 @@ const AddPost: React.FC = () => {
   );
 };
 
-export default AddPost;
+export default EditPost;

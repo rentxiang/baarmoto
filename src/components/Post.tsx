@@ -15,6 +15,13 @@ import Image from "next/image";
 import { Skeleton } from "./ui/skeleton";
 import { IoLogoWechat } from "react-icons/io5";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { useUser } from "@clerk/clerk-react";
+import EditPost from "./EditPost";
 
 interface Post {
   id: string;
@@ -23,19 +30,28 @@ interface Post {
     id: string;
     name?: string;
     email: string;
-    image_url?: string; 
+    image_url?: string;
+    wechat?: string;
   };
   content: string;
   pic_url: string;
   createdAt: string;
-  price: number
+  price: number;
 }
 
 const Post: React.FC = () => {
-  const {id} = useParams()
+  const { id } = useParams();
   const router = useRouter();
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const { isSignedIn, user, isLoaded } = useUser();
+  const [userId, setUserId] = useState<string | undefined>();
+
+  useEffect(() => {
+    console.log("loggedin?", isSignedIn);
+    setUserId(user?.id);
+  }, [user]);
 
   useEffect(() => {
     if (id) {
@@ -58,23 +74,36 @@ const Post: React.FC = () => {
     }
   }, [id]);
 
-  if (loading) return(
-    <div className="flex flex-col space-y-3 items-center justify-center">
-    <Skeleton className="h-[255px] w-[250px] rounded-xl" />
-    <div className="space-y-2">
-      <Skeleton className="h-6 w-[250px]" />
-      <Skeleton className="h-6 w-[200px]" />
-    </div>
-  </div>
-  )
+  if (loading)
+    return (
+      <div className="flex flex-col space-y-3 items-center justify-center">
+        <Skeleton className="h-[255px] w-[250px] rounded-xl" />
+        <div className="space-y-2">
+          <Skeleton className="h-6 w-[250px]" />
+          <Skeleton className="h-6 w-[200px]" />
+        </div>
+      </div>
+    );
 
   if (!post) return <p>No post found</p>;
-
+  const handleEdit = () => {
+    setIsEditing(true);
+    console.log("editing")
+  };
   return (
     <div className="w-96 mx-auto p-4">
-      <Button className="mb-4" onClick={() => router.back()}>
-        Back
-      </Button>
+      <div className="flex justify-between items-center mb-4">
+        {" "}
+        <Button className="" onClick={() => router.back()}>
+          Back
+        </Button>
+        {userId === post.author.id ? (
+          <EditPost/>
+        ) : (
+          " "
+        )}
+        
+      </div>
       <Card className="shadow-md rounded-lg overflow-hidden">
         {post.pic_url && (
           <Image
@@ -89,29 +118,40 @@ const Post: React.FC = () => {
           <CardTitle className="text-2xl font-bold mb-2">
             {post.title}
           </CardTitle>
-          <CardTitle className="mb-2">
-            ${post.price}
-          </CardTitle>
+          <CardTitle className="mb-2">${post.price}</CardTitle>
           <CardDescription className="text-gray-600 mb-4 pt-2 flex items-center gap-3">
             <p>By {post.author.name}</p>
-        <Avatar >
-          <AvatarImage src={post.author.image_url} />
-          <AvatarFallback ></AvatarFallback>
-        </Avatar>
+            <Avatar>
+              <AvatarImage src={post.author.image_url} />
+              <AvatarFallback></AvatarFallback>
+            </Avatar>
           </CardDescription>
         </CardHeader>
         <CardContent>
           <p className="text-gray-800">{post.content}</p>
         </CardContent>
         <CardFooter className="justify-between items-center">
-        <Button className="gap-2" onClick={() => console.log("Messaging...")}>
-        <IoLogoWechat />Message
-      </Button>
+          <Popover>
+            <PopoverTrigger>
+              <Button
+                className="gap-2"
+                onClick={() => console.log("Messaging...")}
+              >
+                <IoLogoWechat />
+                Message
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent>
+              {post.author.wechat
+                ? post.author.wechat
+                : "Please reach out to admin for contact"}{" "}
+            </PopoverContent>
+          </Popover>
+
           <p className="text-sm text-gray-500">
             Posted on: {new Date(post.createdAt).toLocaleDateString()}
           </p>
         </CardFooter>
-        
       </Card>
     </div>
   );
