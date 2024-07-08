@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/popover";
 import { useUser } from "@clerk/clerk-react";
 import EditPost from "./EditPost";
+import DeletePost from "./DeletePost";
 
 interface Post {
   id: string;
@@ -48,6 +49,21 @@ const Post: React.FC = () => {
   const { isSignedIn, user, isLoaded } = useUser();
   const [userId, setUserId] = useState<string | undefined>();
 
+  const fetchPost = async () => {
+    try {
+      const response = await fetch(`/api/get-post/${id}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch post");
+      }
+      const data = await response.json();
+      setPost(data.result);
+      console.log(data.result);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
   useEffect(() => {
     console.log("loggedin?", isSignedIn);
     setUserId(user?.id);
@@ -55,25 +71,13 @@ const Post: React.FC = () => {
 
   useEffect(() => {
     if (id) {
-      const fetchPost = async () => {
-        try {
-          const response = await fetch(`/api/get-post/${id}`);
-          if (!response.ok) {
-            throw new Error("Failed to fetch post");
-          }
-          const data = await response.json();
-          setPost(data.result);
-          console.log(data.result);
-        } catch (error) {
-          console.log(error);
-        } finally {
-          setLoading(false);
-        }
-      };
       fetchPost();
     }
   }, [id]);
-
+  const handlePostUpdate = () => {
+    setLoading(true);
+    fetchPost();
+  };
   if (loading)
     return (
       <div className="flex flex-col space-y-3 items-center justify-center">
@@ -86,10 +90,6 @@ const Post: React.FC = () => {
     );
 
   if (!post) return <p>No post found</p>;
-  const handleEdit = () => {
-    setIsEditing(true);
-    console.log("editing")
-  };
   return (
     <div className="w-96 mx-auto p-4">
       <div className="flex justify-between items-center mb-4">
@@ -98,11 +98,13 @@ const Post: React.FC = () => {
           Back
         </Button>
         {userId === post.author.id ? (
-          <EditPost/>
+          <div className="flex flex-row gap-2">
+            <EditPost onEditUpdated={handlePostUpdate} />
+            <DeletePost onDeleteUpdated={handlePostUpdate} />
+          </div>
         ) : (
           " "
         )}
-        
       </div>
       <Card className="shadow-md rounded-lg overflow-hidden">
         {post.pic_url && (

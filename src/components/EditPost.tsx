@@ -27,6 +27,7 @@ import { useState, useEffect } from "react";
 import { Input } from "./ui/input";
 import { useRouter, useParams } from "next/navigation";
 import { FaEdit } from "react-icons/fa";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   title: z
@@ -49,11 +50,12 @@ const formSchema = z.object({
 });
 type FormValues = z.infer<typeof formSchema> & { name?: string };
 
-const EditPost: React.FC = () => {
+const EditPost: React.FC<{ onEditUpdated: () => void }> = ({onEditUpdated}) => {
   const { id } = useParams();
   const [isEditing, setIsEditing] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [post, setPost] = useState<FormValues | null>(null);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -73,6 +75,7 @@ const EditPost: React.FC = () => {
           }
           const data = await response.json();
           form.reset(data.result);
+          setPost(data.result);
           console.log(data.result);
         } catch (error) {
           console.error(error);
@@ -97,24 +100,29 @@ const EditPost: React.FC = () => {
         },
         body: JSON.stringify(values),
       });
-
+      console.log(res);
       if (!res.ok) {
+        toast("Failed to update post");
+
         throw new Error("Failed to update post.");
       }
       setSubmitting(false);
       setIsEditing(false);
-      router.push("/marketplace");
+      toast("Successfully edited");
+
     } catch (error) {
       setSubmitting(false);
       console.error("Error updating post:", error);
       alert("Failed to update post. Please try again.");
+    } finally {
+      onEditUpdated();
     }
   };
 
-  useEffect(() => {
-    // Prefetch the marketplace page
-    router.prefetch("/marketplace");
-  }, [router]);
+  // useEffect(() => {
+  //   // Prefetch the marketplace page
+  //   router.prefetch("/marketplace");
+  // }, [router]);
 
   const handleEditPost = () => {
     setIsEditing(true);
@@ -128,7 +136,7 @@ const EditPost: React.FC = () => {
       <Drawer open={isEditing} onOpenChange={setIsEditing}>
         <DrawerTrigger asChild>
           <Button type="button" onClick={handleEditPost}>
-          <FaEdit/>
+            <FaEdit />
           </Button>
         </DrawerTrigger>
 

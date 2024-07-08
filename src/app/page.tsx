@@ -16,7 +16,6 @@ const Page = async ({
       <HomepageHero/>
       <BlogPostsPreview posts={result.posts} />
       <BlogPostsPagination pagination={result.pagination} />
-      <a href="mailto:bayareaasianriders@gmail.com"><h1 className="py-7 text-sm text-end">Contact admin for post</h1></a>
       
     </div>
   );

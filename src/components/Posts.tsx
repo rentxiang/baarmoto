@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import PostCard from "./PostCard";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
+import AddPost from "./AddPost";
+import { toast } from "sonner";
 interface Post {
   id: number;
   title: string;
@@ -10,7 +12,7 @@ interface Post {
     id: string;
     name?: string;
     email: string;
-    image_url?: string; 
+    image_url?: string;
   };
   content: string;
   pic_url: string;
@@ -42,7 +44,8 @@ const Posts: React.FC = () => {
     }
   };
 
-  const refresh = () => {
+  const handleAdded = () => {
+    toast("Post has been created");
     setIsloading(true);
     fetchPosts();
   };
@@ -59,7 +62,11 @@ const Posts: React.FC = () => {
   if (!posts) return <p>No post found</p>;
 
   return (
-    <div className="pt-4">
+    <div className="">
+      <div className="flex pb-4 items-center justify-between">
+        <h1 className="text-xl font-bold">Today&apos; picks</h1>
+        <AddPost onAdded={handleAdded} />
+      </div>
       <div className="md:hidden flex flex-col gap-4 m-4 ">
         {posts.map((post) => (
           <PostCard
@@ -71,7 +78,9 @@ const Posts: React.FC = () => {
             pic_url={post.pic_url}
             created_at={post.createdAt}
             price={post.price}
-            author_image_url={post.author.image_url || "https://github.com/shadcn.png"}
+            author_image_url={
+              post.author.image_url || "https://github.com/shadcn.png"
+            }
           />
         ))}
       </div>
@@ -86,8 +95,9 @@ const Posts: React.FC = () => {
             pic_url={post.pic_url}
             created_at={post.createdAt}
             price={post.price}
-            author_image_url={post.author.image_url || "https://github.com/shadcn.png"}
-
+            author_image_url={
+              post.author.image_url || "https://github.com/shadcn.png"
+            }
           />
         ))}
       </div>

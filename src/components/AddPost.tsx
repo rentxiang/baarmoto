@@ -46,7 +46,7 @@ const formSchema = z.object({
   ),
 });
 type FormValues = z.infer<typeof formSchema> & { name?: string };
-const AddPost: React.FC = () => {
+const AddPost: React.FC<{ onAdded: () => void }> = ({ onAdded }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const router = useRouter();
@@ -60,8 +60,6 @@ const AddPost: React.FC = () => {
 
   const onSubmit = async (values: FormValues) => {
     setSubmitting(true);
-    console.log("values:", values);
-
     try {
       const res = await fetch("/api/add-post", {
         method: "POST",
@@ -75,9 +73,10 @@ const AddPost: React.FC = () => {
       if (!res.ok) {
         throw new Error("Failed to submit post.");
       }
+      onAdded();
       setSubmitting(false);
       setIsAdding(false);
-      router.push("/maketplace");
+      router.refresh();
     } catch (error) {
       console.error("Error submitting post:", error);
       alert("Failed to submit post. Please try again.");

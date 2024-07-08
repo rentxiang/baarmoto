@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Icons } from "./ui/icons";
 import Image from "next/image";
 import { useRouter } from 'next/navigation';
-
+import { MdEmail } from "react-icons/md";
 
 export const Footer: FunctionComponent = () => {
   const router = useRouter()
@@ -21,6 +21,8 @@ export const Footer: FunctionComponent = () => {
             alt="baar"
           />
         <p className="pt-7">© {config.blog.copyright} {new Date().getFullYear()}</p>
+      <a href="mailto:bayareaasianriders@gmail.com"><h1 className="pt-7 text-sm text-end flex items-center gap-2"><MdEmail />Contact admin for posting or issues</h1></a>
+
       </div>
       <div className="flex justify-between gap-2 text-sm text-muted-foreground cursor-pointer" onClick={()=> router.push(`https://github.com/rentxiang/baarmoto`)}>
 
