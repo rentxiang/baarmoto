@@ -101,11 +101,11 @@ const AddPost: React.FC<{ onAdded: () => void }> = ({ onAdded }) => {
           </Button>
         </DrawerTrigger>
 
-        <DrawerContent className="flex justify-center items-center p-4 max-w-md ">
+        <DrawerContent className="flex justify-center items-center p-4 max-w-md h-screen overflow-y-auto">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="h-screen">
               <DrawerHeader>
-                <DrawerTitle className="pt-2">What to sell?</DrawerTitle>
+                <DrawerTitle className="pt-7">What to sell?</DrawerTitle>
               </DrawerHeader>
 
               <FormField
