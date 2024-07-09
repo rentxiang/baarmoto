@@ -2,14 +2,20 @@ import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { currentUser } from "@clerk/nextjs/server";
 
-export async function PUT(request: Request, {params}:{params:{id:string}}) {
+export async function PUT(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
   const res = await request.json();
   const id = params.id;
-  const { title, content, pic_url, price } = res;
+  const { title, content, price } = res;
   const user = await currentUser();
 
   if (!user) {
-    return NextResponse.json({ error: "User not authenticated" }, { status: 401 });
+    return NextResponse.json(
+      { error: "User not authenticated" },
+      { status: 401 }
+    );
   }
 
   const existingPost = await prisma.post.findUnique({
@@ -22,7 +28,10 @@ export async function PUT(request: Request, {params}:{params:{id:string}}) {
   }
 
   if (existingPost.authorId !== user.id) {
-    return NextResponse.json({ error: "User not authorized to edit this post" }, { status: 403 });
+    return NextResponse.json(
+      { error: "User not authorized to edit this post" },
+      { status: 403 }
+    );
   }
 
   const result = await prisma.post.update({
@@ -30,7 +39,6 @@ export async function PUT(request: Request, {params}:{params:{id:string}}) {
     data: {
       title,
       content,
-      pic_url,
       price,
     },
     include: {
