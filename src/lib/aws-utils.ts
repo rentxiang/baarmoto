@@ -1,8 +1,8 @@
 import { DeleteObjectsCommand, S3Client } from "@aws-sdk/client-s3";
 
 const bucketName = process.env.NEXT_PUBLIC_AWS_S3_BUCKET_NAME;
-const accessKeyId = process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID;
-const secretAccessKey = process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY;
+const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
+const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 const region = process.env.NEXT_PUBLIC_AWS_REGION;
 
 if (!bucketName || !accessKeyId || !secretAccessKey || !region) {
