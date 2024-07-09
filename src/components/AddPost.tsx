@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { Textarea } from "@/components/ui/textarea"
 import {
   Form,
   FormControl,
@@ -17,7 +18,6 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
@@ -26,6 +26,8 @@ import {
 import { useState, useEffect } from "react";
 import { Input } from "./ui/input";
 import { useRouter } from "next/navigation";
+import AWS from 'aws-sdk';
+
 const formSchema = z.object({
   title: z
     .string()
@@ -37,7 +39,7 @@ const formSchema = z.object({
     .nonempty({ message: "Content is required" })
     .min(2, { message: "Content must be at least 2 characters" })
     .max(100, { message: "Content cannot be more than 150 characters" }),
-  pic_url: z.string().url({ message: "Must be a valid URL" }),
+  pic_urls: z.array(z.string().url()).optional(),
   price: z.preprocess(
     (val) => parseFloat(val as string),
     z.number().min(0, { message: "Price must be at least 0" }).max(999999, {
@@ -46,28 +48,83 @@ const formSchema = z.object({
   ),
 });
 type FormValues = z.infer<typeof formSchema> & { name?: string };
+
+// AWS configuration
+AWS.config.update({
+  accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY,
+  region: process.env.NEXT_PUBLIC_AWS_REGION,
+});
+
+const s3 = new AWS.S3();
+
+const uploadFiles = async (files: File[]): Promise<string[]> => {
+  const bucketName = process.env.NEXT_PUBLIC_AWS_S3_BUCKET_NAME;
+  if (!bucketName) {
+    throw new Error("AWS S3 bucket name not provided in environment variables.");
+  }
+
+  const uploadPromises = files.map((file) => {
+    const params: AWS.S3.PutObjectRequest = {
+      Bucket: bucketName,
+      Key: `${Date.now()}-${file.name}`,
+      Body: file,
+      ContentType: file.type,
+    };
+
+    return s3.upload(params).promise().then((data) => data.Location);
+  });
+
+  try {
+    return await Promise.all(uploadPromises);
+  } catch (err) {
+    console.error("Error uploading files:", err);
+    throw err;
+  }
+};
+
 const AddPost: React.FC<{ onAdded: () => void }> = ({ onAdded }) => {
   const [isAdding, setIsAdding] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState<File[] | null>(null);
+  const [fileError, setFileError] = useState<string | null>(null);
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      pic_url: "https://baarmoto.vercel.app/images/motorbikeIcon.svg",
+      pic_urls: [],
     },
   });
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      const files = Array.from(event.target.files);
+      if (files.length > 3) {
+        setFileError("You can only upload up to 3 images.");
+      } else {
+        setFileError(null);
+        setSelectedFiles(files);
+      }
+    }
+  };
 
   const onSubmit = async (values: FormValues) => {
     setSubmitting(true);
     try {
+      let pic_urls: string[] = [];
+
+      if (selectedFiles) {
+        pic_urls = await uploadFiles(selectedFiles);
+      }
+
       const res = await fetch("/api/add-post", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Cache-Control": "no-cache",
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify({ ...values, pic_urls }),
       });
 
       if (!res.ok) {
@@ -82,10 +139,12 @@ const AddPost: React.FC<{ onAdded: () => void }> = ({ onAdded }) => {
       alert("Failed to submit post. Please try again.");
     }
   };
+
   useEffect(() => {
     // Prefetch the marketplace page
     router.prefetch("/marketplace");
   }, [router]);
+
   const handleNewPost = () => {
     setIsAdding(true);
     console.log("editing new post");
@@ -101,9 +160,9 @@ const AddPost: React.FC<{ onAdded: () => void }> = ({ onAdded }) => {
           </Button>
         </DrawerTrigger>
 
-        <DrawerContent className="flex justify-center items-center p-4 max-w-md h-screen overflow-y-auto">
+        <DrawerContent className="flex justify-center items-center p-4 max-w-md overflow-y-auto">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="h-screen">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="">
               <DrawerHeader>
                 <DrawerTitle className="pt-7">What to sell?</DrawerTitle>
               </DrawerHeader>
@@ -133,7 +192,7 @@ const AddPost: React.FC<{ onAdded: () => void }> = ({ onAdded }) => {
                   <FormItem>
                     <FormLabel>Content</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter your content" {...field} />
+                    <Textarea placeholder="Enter your content" {...field}/>
                     </FormControl>
                     {form.formState.errors.content && (
                       <FormMessage>
@@ -168,20 +227,21 @@ const AddPost: React.FC<{ onAdded: () => void }> = ({ onAdded }) => {
 
               <FormField
                 control={form.control}
-                name="pic_url"
+                name="pic_urls"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Picture URL</FormLabel>
+                    <FormLabel>Pictures</FormLabel>
                     <FormControl>
-                      <Input placeholder="Picture URL" {...field} />
+                      <Input type="file" accept="image/*" multiple onChange={handleFileChange} />
                     </FormControl>
-                    {form.formState.errors.pic_url && (
+                    {fileError && <FormMessage>{fileError}</FormMessage>}
+                    {form.formState.errors.pic_urls && (
                       <FormMessage>
-                        {form.formState.errors.pic_url.message}
+                        {form.formState.errors.pic_urls.message}
                       </FormMessage>
                     )}
                     <FormDescription>
-                      Sorry, we only accept picture urls for now :o
+                      Please select up to 3 images to upload.
                     </FormDescription>
                   </FormItem>
                 )}

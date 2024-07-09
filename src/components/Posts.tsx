@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
 import AddPost from "./AddPost";
 import { toast } from "sonner";
+
 interface Post {
   id: number;
   title: string;
@@ -15,7 +16,7 @@ interface Post {
     image_url?: string;
   };
   content: string;
-  pic_url: string;
+  pic_urls: string[];
   createdAt: string;
   price: number;
 }
@@ -75,7 +76,7 @@ const Posts: React.FC = () => {
             title={post.title}
             author={post.author.name || "Anonymous"}
             content={post.content}
-            pic_url={post.pic_url}
+            pic_url={post.pic_urls?.[0]}
             created_at={post.createdAt}
             price={post.price}
             author_image_url={
@@ -92,7 +93,7 @@ const Posts: React.FC = () => {
             title={post.title}
             author={post.author.name || "Anonymous"}
             content={post.content}
-            pic_url={post.pic_url}
+            pic_url={post.pic_urls?.[0]}
             created_at={post.createdAt}
             price={post.price}
             author_image_url={

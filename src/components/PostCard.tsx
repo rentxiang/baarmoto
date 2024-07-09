@@ -42,7 +42,7 @@ const PostCard: React.FC<PostCardProps> = ({
       >
         <div className="min-h-30 max-h-48 overflow-hidden">
           <Image
-            src={pic_url}
+            src={pic_url ?? "https://baarmoto.vercel.app/images/motorbikeIcon.svg"}
             alt="picture"
             className="cursor-pointer w-full object-cover"
             width={150}

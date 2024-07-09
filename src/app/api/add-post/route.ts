@@ -4,7 +4,7 @@ import { currentUser } from "@clerk/nextjs/server";
 
 export async function POST(request: Request) {
   const res = await request.json();
-  const { title, content, pic_url, price } = res;
+  const { title, content, pic_urls, price } = res;
   const user = await currentUser();
 
   if (!user) {
@@ -24,7 +24,7 @@ export async function POST(request: Request) {
     data: {
       title,
       content,
-      pic_url,
+      pic_urls: pic_urls || ["https://baarmoto.vercel.app/images/motorbikeIcon.svg"],
       price,
       published: true,
       author: existingAuthor

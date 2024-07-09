@@ -21,7 +21,7 @@ model Post {
     id        String    @id @default(cuid())
     title     String
     content   String?
-    pic_url   String
+    pic_urls  String[]
     published Boolean   @default(false)
     createdAt DateTime  @default(now()) @map(name: "created_at")
     updatedAt DateTime  @updatedAt @map(name: "updated_at")

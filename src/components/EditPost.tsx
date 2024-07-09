@@ -28,6 +28,7 @@ import { Input } from "./ui/input";
 import { useRouter, useParams } from "next/navigation";
 import { FaEdit } from "react-icons/fa";
 import { toast } from "sonner";
+import { Textarea } from "./ui/textarea";
 
 const formSchema = z.object({
   title: z
@@ -40,7 +41,6 @@ const formSchema = z.object({
     .nonempty({ message: "Content is required" })
     .min(2, { message: "Content must be at least 2 characters" })
     .max(100, { message: "Content cannot be more than 150 characters" }),
-  pic_url: z.string().url({ message: "Must be a valid URL" }),
   price: z.preprocess(
     (val) => parseFloat(val as string),
     z.number().min(0, { message: "Price must be at least 0" }).max(999999, {
@@ -61,7 +61,6 @@ const EditPost: React.FC<{ onEditUpdated: () => void }> = ({onEditUpdated}) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      pic_url: "https://baarmoto.vercel.app/images/motorbikeIcon.svg",
     },
   });
 
@@ -119,11 +118,6 @@ const EditPost: React.FC<{ onEditUpdated: () => void }> = ({onEditUpdated}) => {
     }
   };
 
-  // useEffect(() => {
-  //   // Prefetch the marketplace page
-  //   router.prefetch("/marketplace");
-  // }, [router]);
-
   const handleEditPost = () => {
     setIsEditing(true);
     console.log("editing post");
@@ -172,7 +166,8 @@ const EditPost: React.FC<{ onEditUpdated: () => void }> = ({onEditUpdated}) => {
                   <FormItem>
                     <FormLabel>Content</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter your content" {...field} />
+                    <Textarea placeholder="Enter your content" {...field}/>
+
                     </FormControl>
                     {form.formState.errors.content && (
                       <FormMessage>
@@ -204,28 +199,6 @@ const EditPost: React.FC<{ onEditUpdated: () => void }> = ({onEditUpdated}) => {
                   </FormItem>
                 )}
               />
-
-              <FormField
-                control={form.control}
-                name="pic_url"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Picture URL</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Picture URL" {...field} />
-                    </FormControl>
-                    {form.formState.errors.pic_url && (
-                      <FormMessage>
-                        {form.formState.errors.pic_url.message}
-                      </FormMessage>
-                    )}
-                    <FormDescription>
-                      Sorry, we only accept picture urls for now :o
-                    </FormDescription>
-                  </FormItem>
-                )}
-              />
-
               <DrawerFooter>
                 <Button type="submit" disabled={submitting}>
                   {submitting ? "Submitting..." : "Submit"}

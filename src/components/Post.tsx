@@ -23,6 +23,13 @@ import {
 import { useUser } from "@clerk/clerk-react";
 import EditPost from "./EditPost";
 import DeletePost from "./DeletePost";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 interface Post {
   id: string;
@@ -35,7 +42,7 @@ interface Post {
     wechat?: string;
   };
   content: string;
-  pic_url: string;
+  pic_urls: string[];
   createdAt: string;
   price: number;
 }
@@ -57,7 +64,7 @@ const Post: React.FC = () => {
       }
       const data = await response.json();
       setPost(data.result);
-      console.log(data.result);
+      console.log("post page:", data.result);
     } catch (error) {
       console.log(error);
     } finally {
@@ -107,15 +114,28 @@ const Post: React.FC = () => {
         )}
       </div>
       <Card className="shadow-md rounded-lg overflow-hidden">
-        {post.pic_url && (
-          <Image
-            src={post.pic_url}
-            alt={post.title}
-            width={200}
-            height={200}
-            className="w-full h-full object-cover"
-          />
-        )}
+        <Carousel>
+          <CarouselContent>
+
+            {post.pic_urls.map((url, index) => (
+              <CarouselItem key={index}>
+             <div>
+            <Image
+                  src={url}
+                  alt={post.title}
+                  width={200}
+                  height={200}
+                  className="w-full  object-cover"
+                />
+            </div>
+                <p className="bg-white text-sm text-end">{index+1} of {post.pic_urls.length}</p>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+
         <CardHeader className="p-6">
           <CardTitle className="text-2xl font-bold mb-2">
             {post.title}
@@ -124,7 +144,9 @@ const Post: React.FC = () => {
           <CardDescription className="text-gray-600 mb-4 pt-2 flex items-center gap-3">
             <p>By {post.author.name}</p>
             <Avatar>
-              <AvatarImage src={post.author.image_url} />
+              <AvatarImage
+                src={post.author.image_url ?? "https://github.com/shadcn.pn"}
+              />
               <AvatarFallback></AvatarFallback>
             </Avatar>
           </CardDescription>
