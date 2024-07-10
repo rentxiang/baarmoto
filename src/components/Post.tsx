@@ -151,7 +151,7 @@ const Post: React.FC = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-gray-800">{post.content}</p>
+          <p className="">{post.content}</p>
         </CardContent>
         <CardFooter className="justify-between items-center">
           <Popover>
