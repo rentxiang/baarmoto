@@ -56,6 +56,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
+            <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+            </head>
             <div className="container max-w-8xl mx-auto">
               <Header />
               <main>{children}</main>
