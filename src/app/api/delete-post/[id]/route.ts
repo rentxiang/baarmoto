@@ -1,7 +1,27 @@
 import prisma from '@/lib/prisma';
 import { NextResponse } from 'next/server';
 import { currentUser } from '@clerk/nextjs/server';
-import { deleteS3Objects } from '@/lib/aws-utils';
+import { S3Client, DeleteObjectsCommand } from "@aws-sdk/client-s3";
+
+const s3Client = new S3Client({
+  region: process.env.AWS_S3_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID as string,
+    secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY as string,
+  },
+});
+
+async function deleteS3Objects(keys: string[]) {
+  const params = {
+    Bucket: process.env.AWS_S3_BUCKET_NAME,
+    Delete: {
+      Objects: keys.map(key => ({ Key: key })),
+    },
+  };
+
+  const command = new DeleteObjectsCommand(params);
+  return s3Client.send(command);
+}
 
 export async function DELETE(request: Request, { params }: { params: { id: string } }) {
   const id = params.id;

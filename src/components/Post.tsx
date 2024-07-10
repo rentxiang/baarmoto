@@ -72,7 +72,6 @@ const Post: React.FC = () => {
     }
   };
   useEffect(() => {
-    console.log("loggedin?", isSignedIn);
     setUserId(user?.id);
   }, [user]);
 
@@ -128,7 +127,7 @@ const Post: React.FC = () => {
                   className="w-full  object-cover"
                 />
             </div>
-                <p className="bg-white text-sm text-end">{index+1} of {post.pic_urls.length}</p>
+                <p className="bg-transparent text-sm text-end px-2">{index+1} of {post.pic_urls.length}</p>
               </CarouselItem>
             ))}
           </CarouselContent>

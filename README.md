@@ -46,4 +46,6 @@ bun dev
 
 1. dynamic rendering 
 2. cache strategy: revalidate and cookie()
-3. postgres tags filter fetch -> Prisma ORM introduced 
+3. postgres relational querying -> Prisma ORM introduced 
+4. status updates through parent-child components callback functions
+5. route api,aws-sdk and Buffer handle AWS s3 images upload/delete
