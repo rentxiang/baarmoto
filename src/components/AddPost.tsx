@@ -121,7 +121,7 @@ const AddPost: React.FC<{ onAdded: () => void }> = ({ onAdded }) => {
             + New
           </Button>
         </DrawerTrigger>
-        <DrawerContent className="flex justify-center items-center p-4 max-w-md overflow-y-auto">
+        <DrawerContent className="flex justify-center items-center p-4 max-w-md ">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="">
               <DrawerHeader>
