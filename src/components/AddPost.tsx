@@ -95,7 +95,7 @@ const AddPost: React.FC<{ onAdded: () => void }> = ({ onAdded }) => {
       });
 
       if (!res.ok) {
-        throw new Error("Failed to submit post.");
+        throw new Error("Try to submit less or smaller pictures.");
       }
 
       onAdded();
@@ -170,7 +170,9 @@ const AddPost: React.FC<{ onAdded: () => void }> = ({ onAdded }) => {
                   {form.formState.errors.pic_urls && (
                     <FormMessage>{form.formState.errors.pic_urls.message}</FormMessage>
                   )}
-                  <FormDescription>Please select up to 3 images to upload.</FormDescription>
+                  <FormDescription>Please select up to 3 images to upload.
+                  </FormDescription>
+                  
                 </FormItem>
               )} />
               <DrawerFooter>
