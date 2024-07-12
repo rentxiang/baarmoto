@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
 import AddPost from "./AddPost";
 import { toast } from "sonner";
+import { Input } from "./ui/input";
 
 interface Post {
   id: number;
@@ -23,7 +24,9 @@ interface Post {
 
 const Posts: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
-  const [isloading, setIsloading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+
   useEffect(() => {
     fetchPosts();
   }, []);
@@ -39,35 +42,66 @@ const Posts: React.FC = () => {
       const data = await response.json();
       console.log("data", data);
       setPosts(data.reverse());
-      setIsloading(false);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching posts:", error);
     }
   };
 
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    try {
+      let response = await fetch(`/api/search-posts?term=${searchTerm}`);
+      if (!response.ok) {
+        throw new Error("Failed to search posts");
+      }
+      console.log("response:", response)
+
+      const data = await response.json();
+      console.log("data:", data)
+
+      setPosts(data.result.reverse());
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error searching posts:", error);
+    }
+  };
+
   const handleAdded = () => {
     toast("Post has been created");
-    setIsloading(true);
+    setIsLoading(true);
     fetchPosts();
   };
-  if (isloading)
+
+  if (isLoading)
     return (
       <div className="flex flex-col space-y-3 pt-4">
-        {/* <Skeleton className="h-[300px] w-[500px] rounded-xl bg-gradient-to-r from-purple-400 via-pink-500 to-red-500  animate-puls" /> */}
         <div className="space-y-2">
           <Skeleton className="h-4 w-full bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 rounded" />
           <Skeleton className="h-4 w-1/2 bg-gradient-to-r from-yellow-400 via-green-500 to-blue-500 rounded" />
         </div>
       </div>
     );
+
   if (!posts) return <p>No post found</p>;
 
   return (
     <div className="">
+      <form onSubmit={handleSearch} className="pb-4 flex flex-row gap-3">
+        <Input
+          type="text"
+          placeholder="Search posts..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="p-2 border border-gray-300 rounded"
+        />
+      </form>
       <div className="flex pb-4 items-center justify-between">
-        <h1 className="text-xl font-bold">Today&apos; picks</h1>
+        <h1 className="text-xl font-bold">Today&apos;s picks</h1>
         <AddPost onAdded={handleAdded} />
       </div>
+      
       <div className="md:hidden flex flex-col gap-4 m-4 ">
         {posts.map((post) => (
           <PostCard

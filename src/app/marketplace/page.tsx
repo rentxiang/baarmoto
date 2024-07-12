@@ -5,9 +5,7 @@ const Marketplace = () => {
   return (
     <div>
       <div className="hidden md:flex flex-col pb-4">
-        <div className="mb-4">
-          <PostSearch />
-        </div>
+
         <div className="flex flex-row ">
           <div className="w-1/4 p-4">
             <SideFilter />
@@ -18,9 +16,7 @@ const Marketplace = () => {
         </div>
       </div>
       <div className="md:hidden flex flex-col pb-4">
-        <div className="mb-4">
-          <PostSearch />
-        </div>
+  
         <div className="flex flex-col ">
           <div className="">
             <SideFilter />
