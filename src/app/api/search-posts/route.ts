@@ -18,7 +18,8 @@ export async function GET(request: Request) {
         ]
       },
       include: {
-        author: true
+        author: true,
+        tag:true
       }
     });
 
