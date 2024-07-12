@@ -30,6 +30,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { Badge } from "./ui/badge";
 
 interface Post {
   id: string;
@@ -45,6 +46,7 @@ interface Post {
   pic_urls: string[];
   createdAt: string;
   price: number;
+  tag: { tag_name: string };
 }
 
 const Post: React.FC = () => {
@@ -115,19 +117,20 @@ const Post: React.FC = () => {
       <Card className="shadow-md rounded-lg overflow-hidden">
         <Carousel>
           <CarouselContent>
-
             {post.pic_urls.map((url, index) => (
               <CarouselItem key={index}>
-             <div>
-            <Image
-                  src={url}
-                  alt={post.title}
-                  width={200}
-                  height={200}
-                  className="w-full  object-cover"
-                />
-            </div>
-                <p className="bg-transparent text-sm text-end px-2">{index+1} of {post.pic_urls.length}</p>
+                <div>
+                  <Image
+                    src={url}
+                    alt={post.title}
+                    width={200}
+                    height={200}
+                    className="w-full  object-cover"
+                  />
+                </div>
+                <p className="bg-transparent text-sm text-end px-2">
+                  {index + 1} of {post.pic_urls.length}
+                </p>
               </CarouselItem>
             ))}
           </CarouselContent>
@@ -151,8 +154,10 @@ const Post: React.FC = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="">{post.content}</p>
+          <p className="py-4">{post.content}</p>
+ 
         </CardContent>
+        
         <CardFooter className="justify-between items-center">
           <Popover>
             <PopoverTrigger>
@@ -166,14 +171,16 @@ const Post: React.FC = () => {
             </PopoverTrigger>
             <PopoverContent>
               {post.author.wechat
-                ? post.author.wechat
+                ?  `Contact at: ${post.author.wechat}`
                 : "Please reach out to admin for contact"}{" "}
             </PopoverContent>
           </Popover>
 
-          <p className="text-sm text-gray-500">
-            Posted on: {new Date(post.createdAt).toLocaleDateString()}
-          </p>
+            <p className="text-sm text-gray-500">
+              Posted on: {new Date(post.createdAt).toLocaleDateString()}
+            </p>
+
+
         </CardFooter>
       </Card>
     </div>

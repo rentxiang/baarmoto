@@ -16,7 +16,8 @@ export async function GET(request: Request, {params}:{params:{id:string}}) {
 
       },
       include:{
-        author: true
+        author: true,
+        tag:true
       }
     })
 

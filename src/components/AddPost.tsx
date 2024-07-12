@@ -23,18 +23,39 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import { useState } from "react";
 import { Input } from "./ui/input";
 import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
-  title: z.string().nonempty({ message: 'Title is required' }).min(1, { message: 'Title must be at least 1 character' }).max(50, { message: 'Title cannot be more than 50 characters' }),
-  content: z.string().nonempty({ message: 'Content is required' }).min(2, { message: 'Content must be at least 2 characters' }).max(150, { message: 'Content cannot be more than 150 characters' }),
+  title: z
+    .string()
+    .nonempty({ message: "Title is required" })
+    .min(1, { message: "Title must be at least 1 character" })
+    .max(50, { message: "Title cannot be more than 50 characters" }),
+  content: z
+    .string()
+    .nonempty({ message: "Content is required" })
+    .min(0, { message: "Content must be at least 2 characters" })
+    .max(150, { message: "Content cannot be more than 150 characters" }),
   pic_urls: z.array(z.string().url()).optional(),
   price: z.preprocess(
     (val) => parseFloat(val as string),
-    z.number().min(0, { message: 'Price must be at least 0' }).max(999999, { message: 'Price must be less than 999999' })
+    z
+      .number()
+      .min(0, { message: "Price must be at least 0" })
+      .max(999999, { message: "Price must be less than 999999" })
   ),
+  tag: z.string().optional(),
+  wechat:z.string().optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -48,14 +69,20 @@ const AddPost: React.FC<{ onAdded: () => void }> = ({ onAdded }) => {
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: { pic_urls: [] },
+    defaultValues: { pic_urls: [], tag: "", wechat:"" },
   });
-
+  const predefinedTags = [
+    { id: "1", name: "Motorcycles" },
+    { id: "2", name: "Helmets" },
+    { id: "3", name: "Riding gears" },
+    { id: "4", name: "Accessories" },
+    { id: "5", name: "Parts" },
+  ];
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const files = Array.from(event.target.files);
       if (files.length > 3) {
-        setFileError('You can only upload up to 3 images.');
+        setFileError("You can only upload up to 3 images.");
       } else {
         setFileError(null);
         setSelectedFiles(files);
@@ -85,15 +112,20 @@ const AddPost: React.FC<{ onAdded: () => void }> = ({ onAdded }) => {
     try {
       let pic_urls: string[] = [];
       if (selectedFiles) {
-        pic_urls = await Promise.all(selectedFiles.map(file => uploadFile(file)));
+        pic_urls = await Promise.all(
+          selectedFiles.map((file) => uploadFile(file))
+        );
       }
 
       const res = await fetch("/api/add-post", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Cache-Control": "no-cache" },
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": "no-cache",
+        },
         body: JSON.stringify({ ...values, pic_urls }),
       });
-
+      console.log("values", values);
       if (!res.ok) {
         throw new Error("Try to submit less or smaller pictures.");
       }
@@ -127,60 +159,145 @@ const AddPost: React.FC<{ onAdded: () => void }> = ({ onAdded }) => {
               <DrawerHeader>
                 <DrawerTitle className="pt-7">What to sell?</DrawerTitle>
               </DrawerHeader>
-              <FormField control={form.control} name="title" render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Title</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter post title" {...field} />
-                  </FormControl>
-                  {form.formState.errors.title && (
-                    <FormMessage>{form.formState.errors.title.message}</FormMessage>
-                  )}
-                </FormItem>
-              )} />
-              <FormField control={form.control} name="content" render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Content</FormLabel>
-                  <FormControl>
-                    <Textarea placeholder="Enter your content" {...field} />
-                  </FormControl>
-                  {form.formState.errors.content && (
-                    <FormMessage>{form.formState.errors.content.message}</FormMessage>
-                  )}
-                </FormItem>
-              )} />
-              <FormField control={form.control} name="price" render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Price</FormLabel>
-                  <FormControl>
-                    <Input type="number" placeholder="Enter your item price" {...field} />
-                  </FormControl>
-                  {form.formState.errors.price && (
-                    <FormMessage>{form.formState.errors.price.message}</FormMessage>
-                  )}
-                </FormItem>
-              )} />
-              <FormField control={form.control} name="pic_urls" render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Pictures</FormLabel>
-                  <FormControl>
-                    <Input type="file" accept="image/*" multiple onChange={handleFileChange} />
-                  </FormControl>
-                  {fileError && <FormMessage>{fileError}</FormMessage>}
-                  {form.formState.errors.pic_urls && (
-                    <FormMessage>{form.formState.errors.pic_urls.message}</FormMessage>
-                  )}
-                  <FormDescription>Please select up to 3 images to upload.
-                  </FormDescription>
-                  
-                </FormItem>
-              )} />
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Title</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter post title" {...field} />
+                    </FormControl>
+                    {form.formState.errors.title && (
+                      <FormMessage>
+                        {form.formState.errors.title.message}
+                      </FormMessage>
+                    )}
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="content"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Content</FormLabel>
+                    <FormControl>
+                      <Textarea placeholder="Enter your content" {...field} />
+                    </FormControl>
+                    {form.formState.errors.content && (
+                      <FormMessage>
+                        {form.formState.errors.content.message}
+                      </FormMessage>
+                    )}
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="price"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Price</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="Enter your item price"
+                        {...field}
+                      />
+                    </FormControl>
+                    {form.formState.errors.price && (
+                      <FormMessage>
+                        {form.formState.errors.price.message}
+                      </FormMessage>
+                    )}
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="pic_urls"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Pictures</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="file"
+                        accept="image/*"
+                        multiple
+                        onChange={handleFileChange}
+                      />
+                    </FormControl>
+                    {fileError && <FormMessage>{fileError}</FormMessage>}
+                    {form.formState.errors.pic_urls && (
+                      <FormMessage>
+                        {form.formState.errors.pic_urls.message}
+                      </FormMessage>
+                    )}
+                    <FormDescription>
+                      Please select up to 3 images to upload.
+                    </FormDescription>
+                  </FormItem>
+                )}
+              />
+              <div className="flex flex-row gap-4">
+              <FormField
+                control={form.control}
+                name="tag"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Tag</FormLabel>
+                    <FormControl>
+                      <Select
+                        onValueChange={(value) => form.setValue("tag", value)}
+                      >
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select a tag" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {predefinedTags.map((tag) => (
+                            <SelectItem key={tag.id} value={tag.name}>
+                              {tag.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    {form.formState.errors.tag && (
+                      <FormMessage>
+                        {form.formState.errors.tag.message}
+                      </FormMessage>
+                    )}
+                  </FormItem>
+                )}
+              />
+                <FormField
+                control={form.control}
+                name="wechat"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Contact</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Got a wechat?" {...field} />
+                    </FormControl>
+                    {form.formState.errors.wechat && (
+                      <FormMessage>
+                        {form.formState.errors.wechat.message}
+                      </FormMessage>
+                    )}
+                  </FormItem>
+                )}
+              />
+              </div>
+        
               <DrawerFooter>
                 <Button type="submit" disabled={submitting}>
                   {submitting ? "Submitting..." : "Submit"}
                 </Button>
                 <DrawerClose>
-                  <Button variant="outline" onClick={() => setIsAdding(false)}>Cancel</Button>
+                  <Button variant="outline" onClick={() => setIsAdding(false)}>
+                    Cancel
+                  </Button>
                 </DrawerClose>
               </DrawerFooter>
             </form>

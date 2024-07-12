@@ -12,6 +12,7 @@ import {
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 
 interface PostCardProps {
   id: number;
@@ -22,6 +23,7 @@ interface PostCardProps {
   created_at: string;
   price: number;
   author_image_url: string;
+  tag_name: string
 }
 
 const PostCard: React.FC<PostCardProps> = ({
@@ -32,6 +34,7 @@ const PostCard: React.FC<PostCardProps> = ({
   pic_url,
   created_at,
   price,
+  tag_name
 }) => {
   const router = useRouter();
   return (
@@ -42,7 +45,9 @@ const PostCard: React.FC<PostCardProps> = ({
       >
         <div className="min-h-30 max-h-48 overflow-hidden">
           <Image
-            src={pic_url ?? "https://baarmoto.vercel.app/images/motorbikeIcon.svg"}
+            src={
+              pic_url ?? "https://baarmoto.vercel.app/images/motorbikeIcon.svg"
+            }
             alt="picture"
             className="cursor-pointer w-full object-cover"
             width={150}
@@ -57,17 +62,18 @@ const PostCard: React.FC<PostCardProps> = ({
           ${price}
         </h2>
       </CardHeader>
-      <CardContent className="py-2 mt-auto flex items-center gap-2">
+      <CardContent className="py-2 mt-auto flex items-center gap-3">
         <p className="text-sm text-gray-500">By {author}</p>
-        <Avatar >
+        <Avatar>
           <AvatarImage src={author_image_url} />
-          <AvatarFallback ></AvatarFallback>
+          <AvatarFallback></AvatarFallback>
         </Avatar>
       </CardContent>
-      <CardFooter className="">
+      <CardFooter className="flex flex-row items-center justify-between pt-4">
         <p className="text-sm text-gray-500">
           Posted on: {new Date(created_at).toLocaleDateString()}
         </p>
+        <Badge variant="outline" ><p className="text-sm"/>{tag_name}</Badge>
       </CardFooter>
     </Card>
   );

@@ -20,6 +20,9 @@ interface Post {
   pic_urls: string[];
   createdAt: string;
   price: number;
+  tag: {
+    tag_name: string;
+  }
 }
 
 const Posts: React.FC = () => {
@@ -116,6 +119,7 @@ const Posts: React.FC = () => {
             author_image_url={
               post.author.image_url || "https://github.com/shadcn.png"
             }
+            tag_name={post.tag.tag_name}
           />
         ))}
       </div>
@@ -133,6 +137,7 @@ const Posts: React.FC = () => {
             author_image_url={
               post.author.image_url || "https://github.com/shadcn.png"
             }
+            tag_name={post.tag.tag_name}
           />
         ))}
       </div>
