@@ -73,7 +73,8 @@ const PostCard: React.FC<PostCardProps> = ({
         <p className="text-sm text-gray-500">
           Posted on: {new Date(created_at).toLocaleDateString()}
         </p>
-        <Badge variant="outline" ><p className="text-sm"/>{tag_name}</Badge>
+        {tag_name?<Badge variant="outline" ><p className="text-sm"/>{tag_name}</Badge>:""}
+        
       </CardFooter>
     </Card>
   );
