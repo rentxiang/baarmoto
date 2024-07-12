@@ -6,20 +6,22 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const term = searchParams.get('term'); 
 
-    if (!term) {
-      return NextResponse.json({ error: 'Missing term parameter' }, { status: 400 });
-    }
+    let whereCondition = {}; 
 
-    const result = await prisma.post.findMany({
-      where: {
+    if (term) {
+      whereCondition = {
         OR: [
           { title: { contains: term, mode: 'insensitive' } },
           { content: { contains: term, mode: 'insensitive' } }
         ]
-      },
+      };
+    }
+
+    const result = await prisma.post.findMany({
+      where: whereCondition,
       include: {
         author: true,
-        tag:true
+        tag: true
       }
     });
 
